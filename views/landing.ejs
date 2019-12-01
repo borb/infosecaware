@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+    <title>infosecaware :: landing</title>
+
+    <style>small { text-decoration-style: dotted; }</style>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="/javascripts/tagcloud.js" type="text/javascript"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">infosecaware</a>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/landing">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/post">Raise an issue</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/community">Community</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Community search" aria-label="Community Search" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm">
+          <h1>Welcome, <%= email %></h1>
+          <div class="container">
+            <div class="row">
+              <p>Raising an issue with infosec<strong>aware</strong> will help you share your concern with other users within the community. Members can offer advice or solutions or confirm their experiences with the same problem. Don't worry; you can redact your identity or choose to share with a select group of members if you wish.</p>
+              <button class="btn btn-primary">Raise an issue</button>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <p>View community posts. Some of these posts may be shared specifically with you or a group. You can read, comment and rank a post if you wish.</p>
+                <button class="btn btn-success">Go to community</button>
+              </div>
+          </div>
+          <div class="container">
+            &nbsp;
+          </div>
+          <div class="container">
+              <div id="tagcloud">
+                <a href="#" rel="4"><span>ssh<sup>4</sup></span></a>
+                <a href="#" rel="2"><span>docker<sup>2</sup></span></a>
+                <a href="#" rel="5"><span>ddos<sup>5</sup></span></a>
+                <a href="#" rel="5"><span>php<sup>5</sup></span></a>
+                <a href="#" rel="4"><span>mysql<sup>4</sup></span></a>
+                <a href="#" rel="3"><span>drupal<sup>3</sup></span></a>
+                <a href="#" rel="2"><span>xss<sup>2</sup></span></a>
+                <a href="#" rel="2"><span>wordpress<sup>2</sup></span></a>
+              </div>
+              <script>
+                $(document).ready($(function () {
+                  $("#tagcloud a").tagcloud({
+                    color: {
+                      start: '#1c5866',
+                      end: '#661c49'
+                    }
+                  })
+                }))
+              </script>
+          </div>
+        </div>
+        <div class="col-sm">
+          <h2>Recent posts...</h2>
+
+          <div class="container">
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
+              <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
+              <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
+              <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
+              <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
+              <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
+              <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
