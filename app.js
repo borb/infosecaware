@@ -10,17 +10,16 @@ import landingRouter from './routes/landing.js'
 import postRouter from './routes/post.js'
 
 const app = express()
-const __dirname = dirname('.')
 
 // view engine setup
-app.set('views', join(__dirname, 'views'))
+app.set('views', join(dirname('.'), 'views'))
 app.set('view engine', 'ejs')
 
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(join(__dirname, 'public')))
+app.use(express.static(join(dirname('.'), 'public')))
 
 app.use('/', indexpageRouter)
 app.use('/landing', landingRouter)
