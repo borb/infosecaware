@@ -8,7 +8,7 @@ import app from '../app.js'
 import debugjs from 'debug'
 import http from 'http'
 
-let debug = debugjs('infosecaware:server')
+const debug = debugjs('infosecaware:server')
 
 /**
  * Get port from environment and store in Express.
