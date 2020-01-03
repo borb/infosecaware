@@ -1,5 +1,5 @@
 const index = (req, res, next) => {
-  res.render('community', {})
+  res.render('index', {})
 }
 
 export default index

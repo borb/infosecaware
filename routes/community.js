@@ -1,7 +1,7 @@
-var express = require('express')
-var router = express.Router()
-var communitycontroller = require('../controllers/server/communitycontroller')
+import express from 'express'
+import communitycontroller from '../controllers/server/communitycontroller.js'
 
-router.get('/', communitycontroller.index)
+const router = express.Router()
+router.get('/', communitycontroller)
 
-module.exports = router
+export default router

@@ -1,9 +1,10 @@
-var express = require('express')
-var router = express.Router()
-var landingcontroller = require('../controllers/server/landingcontroller')
+import express from 'express'
+import landingcontroller from '../controllers/server/landingcontroller.js'
+
+const router = express.Router()
 
 router
-    .get('/', landingcontroller.index)
-    .post('/', landingcontroller.index)
+    .get('/', landingcontroller)
+    .post('/', landingcontroller)
 
-module.exports = router
+export default router

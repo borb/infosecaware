@@ -1,3 +1,5 @@
-module.exports.index = (req, res, next) => {
-    res.render('post', {})
-  }
+const index = (req, res, next) => {
+  res.render('post', {})
+}
+
+export default index
