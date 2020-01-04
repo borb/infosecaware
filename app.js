@@ -4,10 +4,7 @@ import createError from 'http-errors'
 import express from 'express'
 import logger from 'morgan'
 
-import communityRouter from './routes/community.js'
-import indexpageRouter from './routes/indexpage.js'
-import landingRouter from './routes/landing.js'
-import postRouter from './routes/post.js'
+import routes from './controllers/routes.js'
 
 const app = express()
 
@@ -21,10 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(join(dirname('.'), 'public')))
 
-app.use('/', indexpageRouter)
-app.use('/landing', landingRouter)
-app.use('/post', postRouter)
-app.use('/community', communityRouter)
+app.use('/', routes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
