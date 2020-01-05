@@ -1,5 +1,7 @@
 const index = (req, res, next) => {
-  res.render('post', {})
+  res.render('post', {
+    authUser: req.authUser
+  })
 }
 
 export default index
