@@ -19,6 +19,6 @@ const loginSessionsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-})
+}, {collection: 'loginSessions'})
 
 mongoose.model('loginSessions', loginSessionsSchema)

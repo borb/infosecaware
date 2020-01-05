@@ -29,13 +29,13 @@
             <p>Please log in with your username and password.</p>
         </div>
         <div class="col-sm">
-          <form method="POST" action="/landing">
+          <form method="POST" action="/login">
             <div class="container">
               <div class="row">
                 <label for="email">Email address:</label>
               </div>
               <div class="row">
-                <input type="text" class="form-control" id="email" name="email" placeholder="email@address.com" />
+                <input type="text" class="form-control" id="email" name="email" placeholder="email@address.com" value="<% if (refill.email) { %><%= refill.email %><% } %>" />
               </div>
               <div class="row">&nbsp;</div>
               <div class="row">

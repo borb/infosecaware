@@ -8,17 +8,22 @@ import authenticationcontroller from './server/authenticationcontroller.js'
 
 const router = express.Router()
 
+// index page; it's unauthenticated, so a user can log in
 router.get('/', indexpagecontroller)
 
+// login and logout; logout requires an authenticated session
 router.post('/login', authenticationcontroller.login)
-router.get('/logout', authenticationcontroller.logout)
+router.get('/logout', authenticationcontroller.isAuthenticated, authenticationcontroller.logout)
 
+// the landing page is hidden behind an authenticated session
 router
-    .get('/landing', landingcontroller)
-    .post('/landing', landingcontroller)
+    .get('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
+    .post('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
 
-router.get('/community', communitycontroller)
+// community view; requires authentication
+router.get('/community', authenticationcontroller.isAuthenticated, communitycontroller)
 
-router.get('/post', postcontroller)
+// @todo likely to be converted to an api call; post message, requires authentication
+router.get('/post', authenticationcontroller.isAuthenticated, postcontroller)
 
 export default router
