@@ -4,14 +4,25 @@
   <div class="row">
     <div class="col-sm">
         <h1>infosec<strong>aware</strong></h1>
+
         <p>infosec<strong>aware</strong> is a portal for sharing and solving information security risks and events.</p>
+
         <p>Please log in above with your username and password.</p>
     </div>
     <div class="col-sm">
       <h2>Sign up for an account</h2>
+
       <p>Use this form to create yourself an account</p>
+
       <form method="POST" action="/signup">
         <div class="container">
+          <div class="row">
+            <label for="fullname">Full name:</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="My Name" aria-label="Full name" />
+          </div>
+          <div class="row">&nbsp;</div>
           <div class="row">
             <label for="email">Email address:</label>
           </div>
@@ -30,7 +41,7 @@
             <label for="password">Repeat password:</label>
           </div>
           <div class="row">
-            <input type="password" class="form-control" id="repeat-password" name="password" placeholder="mypassword" />
+            <input type="password" class="form-control" id="repeat-password" name="repeatPassword" placeholder="mypassword" />
           </div>
           <div class="row">&nbsp;</div>
           <div class="row">

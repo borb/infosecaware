@@ -41,6 +41,70 @@ const login = (req, res) => {
   })
 }
 
+const signup = (req, res, next) => {
+  // pre-database lookup validation (saves a db hit if form data is bad)
+  let errors = {}
+  if (req.body.password !== req.body.repeatPassword)
+    errors.passwordMismatch = true
+
+  if (!req.body.email)
+    errors.badEmail = true
+
+  if (!req.body.password)
+    errors.badPassword = true
+
+  if (!req.body.repeatPassword)
+    errors.badRepeatPassword = true
+
+  if (Object.keys(errors).length) {
+    res.render('index', {errors: errors})
+    return
+  }
+
+  const users = mongoose.model('users')
+  users.findOne({email: req.body.email}, (error, user) => {
+    if (error) {
+      res.render('index', {
+        errors: {
+          databaseFailure: true
+        }
+      })
+      return
+    }
+
+    if (user) {
+      res.render('index', {
+        errors: {
+          accountExists: true
+        }
+      })
+      return
+    }
+
+    // there is no existing account; create one
+    let newUser = new users()
+    newUser.email = req.body.email
+    newUser.fullname = req.body.fullname
+    newUser.administrator = false
+    newUser.password = req.body.password
+    newUser.enabled = true
+    newUser.save((error) => {
+      if (error) {
+        res.render('index', {
+          errors: {
+            databaseFailure: true
+          }
+        })
+        return
+      }
+
+      // awesome; we treat signup as middleware, so mark what we've done in request and call next
+      req.accountCreation = true
+      next()
+    })
+  })
+}
+
 const logout = (req, res) => {
   const loginSessions = mongoose.model('loginSessions')
   loginSessions.findOneAndDelete({sessionId: req.cookies.loginSession})
@@ -89,6 +153,7 @@ const isAuthenticated = (req, res, next) => {
 
 export default {
   "login": login,
+  "signup": signup,
   "logout": logout,
   "isAuthenticated": isAuthenticated
 }

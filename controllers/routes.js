@@ -18,8 +18,10 @@ router.get('/favicon.ico', (req, res) => {
 router.get('/', indexpagecontroller)
 
 // login and logout; logout requires an authenticated session
-router.post('/login', authenticationcontroller.login)
-router.get('/logout', authenticationcontroller.isAuthenticated, authenticationcontroller.logout)
+router
+  .post('/login', authenticationcontroller.login)
+  .post('/signup', authenticationcontroller.signup, authenticationcontroller.login)
+  .get('/logout', authenticationcontroller.isAuthenticated, authenticationcontroller.logout)
 
 // the landing page is hidden behind an authenticated session
 router
