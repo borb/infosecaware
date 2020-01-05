@@ -5,10 +5,12 @@
     <div class="col-sm">
         <h1>infosec<strong>aware</strong></h1>
         <p>infosec<strong>aware</strong> is a portal for sharing and solving information security risks and events.</p>
-        <p>Please log in with your username and password.</p>
+        <p>Please log in above with your username and password.</p>
     </div>
     <div class="col-sm">
-      <form method="POST" action="/login">
+      <h2>Sign up for an account</h2>
+      <p>Use this form to create yourself an account</p>
+      <form method="POST" action="/signup">
         <div class="container">
           <div class="row">
             <label for="email">Email address:</label>
@@ -25,7 +27,14 @@
           </div>
           <div class="row">&nbsp;</div>
           <div class="row">
-            <input class="btn btn-primary" type="submit" value="Login" />
+            <label for="password">Repeat password:</label>
+          </div>
+          <div class="row">
+            <input type="password" class="form-control" id="repeat-password" name="password" placeholder="mypassword" />
+          </div>
+          <div class="row">&nbsp;</div>
+          <div class="row">
+            <input class="btn btn-primary" type="submit" value="Signup" />
           </div>
         </div>
       </form>
