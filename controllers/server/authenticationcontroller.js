@@ -4,7 +4,7 @@ import uuid from 'uuid'
 const login = (req, res) => {
     const users = mongoose.model('users')
     users.findOne({email: req.body.email}, (error, user) => {
-        if (error || (user.password != req.body.password)) {
+        if (error || !user || (user.password != req.body.password)) {
             // user not found
             res.render('index', {
                 errors: {
@@ -50,7 +50,7 @@ const logout = (req, res) => {
 const isAuthenticated = (req, res, next) => {
     const loginSessions = mongoose.model('loginSessions')
     loginSessions.findOne({sessionId: req.cookies.loginSession}, (error, loginSession) => {
-        if (error) {
+        if (error || !loginSession) {
             // session not found or database error; treat as not logged in
             res.clearCookie('loginSession')
                .redirect('/')
