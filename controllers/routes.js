@@ -11,7 +11,7 @@ const router = express.Router()
 // @todo create a favicon and specify in link meta
 // this mutes exceptions being displayed until we have completed that
 router.get('/favicon.ico', (req, res) => {
-    res.sendStatus(404)
+  res.sendStatus(404)
 })
 
 // index page; it's unauthenticated, so a user can log in
@@ -23,8 +23,8 @@ router.get('/logout', authenticationcontroller.isAuthenticated, authenticationco
 
 // the landing page is hidden behind an authenticated session
 router
-    .get('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
-    .post('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
+  .get('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
+  .post('/landing', authenticationcontroller.isAuthenticated, landingcontroller)
 
 // community view; requires authentication
 router.get('/community', authenticationcontroller.isAuthenticated, communitycontroller)
