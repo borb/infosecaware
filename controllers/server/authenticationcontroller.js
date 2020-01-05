@@ -48,6 +48,12 @@ const logout = (req, res) => {
 }
 
 const isAuthenticated = (req, res, next) => {
+    if (!req.cookies.loginSession) {
+        // no or empty cookie
+        res.redirect('/')
+        return
+    }
+
     const loginSessions = mongoose.model('loginSessions')
     loginSessions.findOne({sessionId: req.cookies.loginSession}, (error, loginSession) => {
         if (error || !loginSession) {
