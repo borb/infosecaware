@@ -48,7 +48,6 @@ const login = (req, res) => {
         return
       }
 
-      // @todo: cookie expiration please
       res.cookie('loginSession', loginSession.sessionId)
          .redirect('/landing')
     })
