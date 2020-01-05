@@ -8,6 +8,12 @@ import authenticationcontroller from './server/authenticationcontroller.js'
 
 const router = express.Router()
 
+// @todo create a favicon and specify in link meta
+// this mutes exceptions being displayed until we have completed that
+router.get('/favicon.ico', (req, res) => {
+    res.sendStatus(404)
+})
+
 // index page; it's unauthenticated, so a user can log in
 router.get('/', indexpagecontroller)
 
