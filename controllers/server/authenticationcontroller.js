@@ -8,9 +8,6 @@ const login = (req, res) => {
     if (error || !user) {
       // user not found
       res.render('index', {
-        refill: {
-          email: req.body.email
-        },
         errors: {
           loginFailed: true
         },
@@ -24,12 +21,11 @@ const login = (req, res) => {
     if (!passwordMatch) {
       // password does not match
       res.render('index', {
-        refill: {
-          email: req.body.email
-        },
         errors: {
           loginFailed: true
-        }
+        },
+        refill: req.body
+
       })
       return
     }
@@ -43,7 +39,8 @@ const login = (req, res) => {
         res.render('index', {
           errors: {
             databaseFailure: true
-          }
+          },
+          refill: req.body
         })
         return
       }
@@ -63,6 +60,9 @@ const signup = (req, res, next) => {
   if (!req.body.email)
     errors.badEmail = true
 
+  if (!req.body.fullname)
+    errors.badFullname = true
+
   if (!req.body.password)
     errors.badPassword = true
 
@@ -70,7 +70,12 @@ const signup = (req, res, next) => {
     errors.badRepeatPassword = true
 
   if (Object.keys(errors).length) {
-    res.render('index', {errors: errors})
+    res.render('index', {
+      errors: {
+        account: errors
+      },
+      refill: req.body
+    })
     return
   }
 
@@ -80,7 +85,8 @@ const signup = (req, res, next) => {
       res.render('index', {
         errors: {
           databaseFailure: true
-        }
+        },
+        refill: req.body
       })
       return
     }
@@ -88,7 +94,10 @@ const signup = (req, res, next) => {
     if (user) {
       res.render('index', {
         errors: {
-          accountExists: true
+          account: {
+            accountExists: true
+          },
+          refill: req.body
         }
       })
       return
@@ -106,7 +115,8 @@ const signup = (req, res, next) => {
         res.render('index', {
           errors: {
             databaseFailure: true
-          }
+          },
+          refill: req.body
         })
         return
       }
