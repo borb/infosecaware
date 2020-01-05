@@ -60,6 +60,7 @@ const isAuthenticated = (req, res, next) => {
             // session not found or database error; treat as not logged in
             res.clearCookie('loginSession')
                .redirect('/')
+            return
         }
 
         // session has been found, we good; update timestamp and carry on
