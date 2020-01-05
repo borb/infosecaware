@@ -63,11 +63,25 @@ const isAuthenticated = (req, res, next) => {
             return
         }
 
-        // session has been found, we good; update timestamp and carry on
-        loginSession.lastActivityTime = Date.now()
-        loginSession.save(() => {
-            // head on to next route after mongo doc has been updated
-            next()
+        const users = mongoose.model('users')
+        users.findOne({
+            email: loginSession.email,
+            enabled: true
+        }, (error, user) => {
+            if (error || !user) {
+                // user not found or database error; treat as not logged in
+                res.clearCookie('loginSession')
+                   .redirect('/')
+                return
+            }
+
+            // session has been found, we good; update timestamp and carry on
+            loginSession.lastActivityTime = Date.now()
+            loginSession.save(() => {
+                // head on to next route after mongo doc has been updated
+                req.authUser = user
+                next()
+            })
         })
     })
 }
