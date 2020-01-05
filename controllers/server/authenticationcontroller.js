@@ -16,7 +16,6 @@ const login = (req, res) => {
     }
 
     // @todo: password hashing please
-    // @todo: have a look at express-session?
     if (!error && user.password == req.body.password) {
       // user found and passwords match
       let loginSession = new (mongoose.model('loginSessions'))()
