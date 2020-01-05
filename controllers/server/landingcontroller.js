@@ -1,6 +1,6 @@
 const index = (req, res, next) => {
   res.render('landing', {
-    'email': 'myemail@address.com'
+    'authUser': req.authUser
   })
 }
 
