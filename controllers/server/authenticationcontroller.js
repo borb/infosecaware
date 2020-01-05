@@ -1,12 +1,16 @@
 import mongoose from 'mongoose'
 import uuid from 'uuid'
+import bcrypt from 'bcrypt'
 
 const login = (req, res) => {
   const users = mongoose.model('users')
   users.findOne({email: req.body.email}, (error, user) => {
-    if (error || !user || (user.password != req.body.password)) {
+    if (error || !user) {
       // user not found
       res.render('index', {
+        refill: {
+          email: req.body.email
+        },
         errors: {
           loginFailed: true
         },
@@ -15,28 +19,39 @@ const login = (req, res) => {
       return
     }
 
-    // @todo: password hashing please
-    if (!error && user.password == req.body.password) {
-      // user found and passwords match
-      let loginSession = new (mongoose.model('loginSessions'))()
-      loginSession.sessionId = uuid.v4()
-      loginSession.email = req.body.email
-      loginSession.save((error) => {
-        if (error) {
-          res.render('index', {
-            errors: {
-              databaseFailure: true
-            }
-          })
-          return
+    const passwordMatch = bcrypt.compareSync(req.body.password, user.password)
+
+    if (!passwordMatch) {
+      // password does not match
+      res.render('index', {
+        refill: {
+          email: req.body.email
+        },
+        errors: {
+          loginFailed: true
         }
+      })
+      return
+    }
 
-        // @todo: cookie expiration please
-        res.cookie('loginSession', loginSession.sessionId)
-          .redirect('/landing')
+    // user found and passwords match
+    let loginSession = new (mongoose.model('loginSessions'))()
+    loginSession.sessionId = uuid.v4()
+    loginSession.email = req.body.email
+    loginSession.save((error) => {
+      if (error) {
+        res.render('index', {
+          errors: {
+            databaseFailure: true
+          }
         })
-
+        return
       }
+
+      // @todo: cookie expiration please
+      res.cookie('loginSession', loginSession.sessionId)
+         .redirect('/landing')
+    })
   })
 }
 
@@ -85,7 +100,7 @@ const signup = (req, res, next) => {
     newUser.email = req.body.email
     newUser.fullname = req.body.fullname
     newUser.administrator = false
-    newUser.password = req.body.password
+    newUser.password = bcrypt.hashSync(req.body.password, 10)
     newUser.enabled = true
     newUser.save((error) => {
       if (error) {
