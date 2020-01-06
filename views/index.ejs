@@ -1,62 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<% include parts/header.ejs %>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-
-    <title>infosecaware :: login</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">infosecaware</a>
-
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
+<div class="container">
+  <% if (typeof(errors) !== 'undefined') { %>
+    <!-- errors -->
+    <% if (errors.loginFailed) { %>
+      <div class="alert alert-danger alert-dismissible show" role="alert">
+        <strong>Login failed!</strong> Please check your email address and password carefully.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </nav>
+    <% } %>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-            <h1>infosec<strong>aware</strong></h1>
-            <p>infosec<strong>aware</strong> is a portal for sharing and solving information security risks and events.</p>
-            <p>Please log in with your username and password.</p>
-        </div>
-        <div class="col-sm">
-          <form method="POST" action="/landing">
-            <div class="container">
-              <div class="row">
-                <label for="email">Email address:</label>
-              </div>
-              <div class="row">
-                <input type="text" class="form-control" id="email" name="email" placeholder="email@address.com" />
-              </div>
-              <div class="row">&nbsp;</div>
-              <div class="row">
-                <label for="password">Password:</label>
-              </div>
-              <div class="row">
-                <input type="password" class="form-control" id="password" name="password" placeholder="mypassword" />
-              </div>
-              <div class="row">&nbsp;</div>
-              <div class="row">
-                <input class="btn btn-primary" type="submit" value="Login" />
-              </div>
-            </div>
-          </form>
-        </div>
+    <% if (errors.databaseFailure) { %>
+      <div class="alert alert-warning alert-dismissible show" role="alert">
+        We are currently experiencing some technical difficulties. Please try again later.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+    <% } %>
+  <% } %>
+  <div class="row">
+    <div class="col-sm">
+        <h1>infosec<strong>aware</strong></h1>
+
+        <p>infosec<strong>aware</strong> is a portal for sharing and solving information security risks and events.</p>
+
+        <p>Please log in above with your username and password.</p>
     </div>
+    <div class="col-sm">
+      <h2>Sign up for an account</h2>
 
-    <!-- load bootstrap's js & deps after the page has completed loading -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  </body>
-</html>
+      <p>Use this form to create yourself an account</p>
+
+      <% if ((typeof(errors) !== undefined) && (typeof(errors.account) !== undefined)) { %>
+        <div class="alert alert-warning alert-dismissible show" role="alert">
+          <strong>We could not create your account!</strong> Please check the following items:
+
+          <ul>
+            <% if (errors.account.passwordMismatch) { %>
+              <li>Your passwords do not match. Please check these and try again.</li>
+            <% } %>
+            <% if (errors.account.badEmail) { %>
+              <li>Please enter a valid email address.</li>
+            <% } %>
+            <% if (errors.account.badFullname) { %>
+              <li>Please enter your full name.</li>
+            <% } %>
+            <% if (errors.account.badPassword) { %>
+              <li>Please enter a password for your new account.</li>
+            <% } %>
+            <% if (errors.account.badRepeatPassword) { %>
+              <li>Please re-enter your repeat password.</li>
+            <% } %>
+          </ul>
+
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% } %>
+
+      <form method="POST" action="/signup">
+        <div class="container">
+          <div class="row">
+            <label for="fullname">Full name:</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="My Name" value="<%= refill.fullname %>" aria-label="Full name" />
+          </div>
+          <div class="row">&nbsp;</div>
+          <div class="row">
+            <label for="email">Email address:</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control" id="email" name="email" placeholder="email@address.com" value="<%= refill.email %>" aria-label="Email address" />
+          </div>
+          <div class="row">&nbsp;</div>
+          <div class="row">
+            <label for="password">Password:</label>
+          </div>
+          <div class="row">
+            <input type="password" class="form-control" id="password" name="password" placeholder="mypassword" aria-label="Password" />
+          </div>
+          <div class="row">&nbsp;</div>
+          <div class="row">
+            <label for="password">Repeat password:</label>
+          </div>
+          <div class="row">
+            <input type="password" class="form-control" id="repeat-password" name="repeatPassword" placeholder="mypassword" aria-label="Repeat password"/>
+          </div>
+          <div class="row">&nbsp;</div>
+          <div class="row">
+            <input class="btn btn-primary" type="submit" value="Signup" aria-label="Signup" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<% include parts/footer.ejs %>

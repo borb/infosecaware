@@ -1,3 +1,7 @@
-module.exports.index = (req, res, next) => {
-  res.render('community', {})
+const index = (req, res, next) => {
+  res.render('community', {
+    authUser: req.authUser
+  })
 }
+
+export default index

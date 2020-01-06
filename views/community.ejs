@@ -1,127 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<% include parts/header.ejs %>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-
-    <title>infosecaware :: landing</title>
-
-    <style>small { text-decoration-style: dotted; }</style>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">infosecaware</a>
-
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/landing">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/post">Raise an issue</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="/community">Community</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Community search" aria-label="Community Search" />
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-      </div>
-    </nav>
-
-    <div class="container-xl">
-      <div class="row">
-        <h1>Community posts</h1>
-      </div>
-      <div class="row">&nbsp;</div>
-      <div class="row">
-        <div class="col-sm-2">
-          <div class="form-group">
-            Tags:
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="tag1" id="tag1" />
-                <label for="tag1" class="form-check-label">tag1</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="tag2" id="tag2" />
-                <label for="tag2" class="form-check-label">tag2</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="tag3" id="tag3" />
-                <label for="tag3" class="form-check-label">tag3</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            Authors:
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="a123" id="a123" />
-                <label for="a123" class="form-check-label">Scott Chegg</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="b123" id="b123" />
-                <label for="b123" class="form-check-label">Bob Bobbins</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="c123" id="c123" />
-                <label for="c123" class="form-check-label">Paul Theotherone</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            Secrecy:
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="top-secret" id="top-secret" />
-                <label for="top-secret" class="form-check-label">Top secret</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="sensitive" id="sensitive" />
-                <label for="sensitive" class="form-check-label">Sensitive</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="safe" id="safe" />
-                <label for="safe" class="form-check-label">Safe to share</label>
-              </div>
-            </div>
+<div class="container-xl">
+  <div class="row">
+    <h1>Community posts</h1>
+  </div>
+  <div class="row">&nbsp;</div>
+  <div class="row">
+    <div class="col-sm-2">
+      <div class="form-group">
+        Tags:
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="tag1" id="tag1" />
+            <label for="tag1" class="form-check-label">tag1</label>
           </div>
         </div>
-
-        <div class="col-sm-6">
-          <div class="container">
-            <ul class="list-group">
-              <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
-              <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
-              <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
-              <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
-              <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
-              <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
-              <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li>
-            </ul>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="tag2" id="tag2" />
+            <label for="tag2" class="form-check-label">tag2</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="tag3" id="tag3" />
+            <label for="tag3" class="form-check-label">tag3</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Authors:
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="a123" id="a123" />
+            <label for="a123" class="form-check-label">Scott Chegg</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="b123" id="b123" />
+            <label for="b123" class="form-check-label">Bob Bobbins</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="c123" id="c123" />
+            <label for="c123" class="form-check-label">Paul Theotherone</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        Secrecy:
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="top-secret" id="top-secret" />
+            <label for="top-secret" class="form-check-label">Top secret</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="sensitive" id="sensitive" />
+            <label for="sensitive" class="form-check-label">Sensitive</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="safe" id="safe" />
+            <label for="safe" class="form-check-label">Safe to share</label>
           </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+    <div class="col-sm-6">
+      <div class="container">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
+          <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
+          <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
+          <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
+          <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
+          <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
+          <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include parts/footer.ejs %>
