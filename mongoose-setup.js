@@ -31,3 +31,4 @@ process.on('SIGINT', () => {
 // load models
 import './models/users.js'
 import './models/loginSessions.js'
+import './models/issues.js'

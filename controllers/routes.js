@@ -6,6 +6,8 @@ import communitycontroller from './server/communitycontroller.js'
 import postcontroller from './server/postcontroller.js'
 import authenticationcontroller from './server/authenticationcontroller.js'
 
+import raiseissuecontroller from './api/raiseissuecontroller.js'
+
 const router = express.Router()
 
 // @todo create a favicon and specify in link meta
@@ -33,5 +35,9 @@ router.get('/community', authenticationcontroller.isAuthenticated, communitycont
 
 // @todo likely to be converted to an api call; post message, requires authentication
 router.get('/post', authenticationcontroller.isAuthenticated, postcontroller)
+
+// api calls
+router
+  .post('/api/v1/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
 
 export default router
