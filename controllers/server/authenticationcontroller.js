@@ -25,7 +25,6 @@ const login = (req, res) => {
           loginFailed: true
         },
         refill: req.body
-
       })
       return
     }
