@@ -28,3 +28,17 @@ angular.module('infosecaware', [])
 angular.element(function() {
   angular.bootstrap(document, ['infosecaware'])
 })
+
+// autosuggestions for the post tags
+var instance = new AutoSuggest({
+  caseSensitive: false,
+  suggestions: [
+    {
+      trigger: '',
+      // @todo populate this list from database
+      values: ['', 'php', 'nodejs', 'linux', 'openssh']
+    }
+  ]
+})
+
+instance.addInputs(document.getElementById('postTags'))
