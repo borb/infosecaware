@@ -13,7 +13,9 @@ angular.module('infosecaware', [])
         .then(
           function(data) {
             // success happened
-            // @todo close modal & refresh background view
+            // @todo refresh background view
+            $scope.reset
+            $('#raiseIssueModal').modal('hide')
           },
           function(data) {
             // @todo handle errors helpfully
