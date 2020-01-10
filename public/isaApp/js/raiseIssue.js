@@ -31,16 +31,20 @@ angular.element(function() {
   angular.bootstrap(document, ['infosecaware'])
 })
 
-// autosuggestions for the post tags
-var instance = new AutoSuggest({
-  caseSensitive: false,
-  suggestions: [
-    {
-      trigger: '',
-      // @todo populate this list from database
-      values: ['', 'php', 'nodejs', 'linux', 'openssh']
-    }
-  ]
-})
+// when the modal display event is triggered, load the tags & users from
+// database then attach autosuggest
+$('#raiseIssueModal').on('show.bs.modal', function(e) {
+  // autosuggestions for the post tags
+  var instance = new AutoSuggest({
+    caseSensitive: false,
+    suggestions: [
+      {
+        trigger: '',
+        // @todo populate this list from database
+        values: ['', 'php', 'nodejs', 'linux', 'openssh']
+      }
+    ]
+  })
 
-instance.addInputs(document.getElementById('postTags'))
+  instance.addInputs(document.getElementById('postTags'))
+})
