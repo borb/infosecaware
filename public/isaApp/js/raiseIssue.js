@@ -35,16 +35,27 @@ angular.element(function() {
 // database then attach autosuggest
 $('#raiseIssueModal').on('show.bs.modal', function(e) {
   // autosuggestions for the post tags
-  var instance = new AutoSuggest({
-    caseSensitive: false,
-    suggestions: [
-      {
-        trigger: '',
-        // @todo populate this list from database
-        values: ['', 'php', 'nodejs', 'linux', 'openssh']
-      }
-    ]
-  })
+  var $http = angular.injector(['ng']).get('$http')
+  $http.get('/api/v1/getPostTags')
+    .then(
+      function(data) {
+        // success
+        var instance = new AutoSuggest({
+          caseSensitive: false,
+          suggestions: [
+            {
+              trigger: '',
+              // @todo populate this list from database
+              values: ['', 'php', 'nodejs', 'linux', 'openssh']
+            }
+          ]
+        })
 
-  instance.addInputs(document.getElementById('postTags'))
+        instance.addInputs(document.getElementById('postTags'))
+      },
+      function() {
+        // failure
+        console.log('network error: autopopulated post tags will not be available')
+      }
+    )
 })
