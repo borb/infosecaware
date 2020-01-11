@@ -32,8 +32,12 @@ router
 // community view; requires authentication
 router.get('/community', authenticationcontroller.isAuthenticated, communitycontroller)
 
-// api calls
-router
-  .post('/api/v1/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
+// api calls (nested router so we don't have to keep writing full path)
+const apiRouter = express.Router()
+apiRouter
+  .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
+  .get('/getPostTags', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostTags)
+
+router.use('/api/v1', apiRouter)
 
 export default router

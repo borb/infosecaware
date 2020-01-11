@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import _ from 'lodash'
 
 const post = (req, res) => {
   // populate new issue with data
@@ -26,6 +27,20 @@ const post = (req, res) => {
   })
 }
 
+const getPostTags = (req, res) => {
+  const issues = mongoose.model('issues')
+  issues
+    .find()
+    .select('tagList -_id')
+    .exec((error, results) => {
+      res.json({
+        success: true,
+        postTags: _.union(...results.map((result) => result.tagList))
+      })
+    })
+}
+
 export default {
-  "post": post
+  "post": post,
+  "getPostTags": getPostTags
 }
