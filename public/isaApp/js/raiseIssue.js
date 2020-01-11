@@ -38,15 +38,14 @@ $('#raiseIssueModal').on('show.bs.modal', function(e) {
   var $http = angular.injector(['ng']).get('$http')
   $http.get('/api/v1/getPostTags')
     .then(
-      function(data) {
+      function(res) {
         // success
         var instance = new AutoSuggest({
           caseSensitive: false,
           suggestions: [
             {
               trigger: '',
-              // @todo populate this list from database
-              values: ['', 'php', 'nodejs', 'linux', 'openssh']
+              values: res.data.postTags
             }
           ]
         })
