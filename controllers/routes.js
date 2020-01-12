@@ -3,8 +3,9 @@ import express from 'express'
 import indexpagecontroller from './server/indexpagecontroller.js'
 import landingcontroller from './server/landingcontroller.js'
 import communitycontroller from './server/communitycontroller.js'
-import postcontroller from './server/postcontroller.js'
 import authenticationcontroller from './server/authenticationcontroller.js'
+
+import raiseissuecontroller from './api/raiseissuecontroller.js'
 
 const router = express.Router()
 
@@ -31,7 +32,12 @@ router
 // community view; requires authentication
 router.get('/community', authenticationcontroller.isAuthenticated, communitycontroller)
 
-// @todo likely to be converted to an api call; post message, requires authentication
-router.get('/post', authenticationcontroller.isAuthenticated, postcontroller)
+// api calls (nested router so we don't have to keep writing full path)
+const apiRouter = express.Router()
+apiRouter
+  .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
+  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostMetadata)
+
+router.use('/api/v1', apiRouter)
 
 export default router
