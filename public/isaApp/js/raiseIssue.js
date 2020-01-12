@@ -8,18 +8,33 @@ angular.module('infosecaware', [])
     }
 
     $scope.submit = function(post) {
+      var forms = document.getElementsByClassName('needs-validation')
+
+      var failureCount = 0
+      Array.prototype.filter.call(forms, function(form) {
+        if (form.checkValidity() === false) {
+          console.log('raiseIssue form failed validation')
+          failureCount++
+        }
+        form.classList.add('was-validated')
+      })
+
+      // do not proceed to submit form if failures have occurred
+      if (failureCount)
+        return
+
       // write post to api
       $http.post('/api/v1/raiseIssue', post)
         .then(
           function(data) {
             // success happened
-            // @todo refresh background view
+            // @todo refresh background view (perhaps render issue?)
             $scope.reset
             $('#raiseIssueModal').modal('hide')
           },
           function(data) {
-            // @todo handle errors helpfully
             console.error('raiseIssue http call failed', data)
+            window.alert("Failed to submit issue; Please wait and try again.")
           }
         )
     }

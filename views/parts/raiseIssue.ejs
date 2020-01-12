@@ -8,67 +8,76 @@
         </button>
       </div>
 
-      <form>
+      <form class="needs-validation" novalidate>
         <div class="modal-body">
           <div class="container">
             <div class="row">
               <div class="col-sm">
-                <div class="row">
-                  Sensitivity:
-                </div>
-                <div class="row">
-                  <ul class="list-group">
-                    <label><li class="list-group-item list-group-item-danger">
-                      <input class="form-check-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="top-secret" id="top-secret" checked />
-                      Top secret (do not share; may contain company identifiable information)
-                    </li></label>
-                    <label><li class="list-group-item list-group-item-warning">
-                      <input class="form-check-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="sensitive" id="sensitive" />
-                      Sensitive (information may be paraphrased elsewhere but not directly copied)
-                    </li></label>
-                    <label><li class="list-group-item list-group-item-success">
-                      <input class="form-check-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="safe" id="safe" />
-                      Safe to share (no personal nor identifiable information)
-                    </li></label>
-                  </ul>
-                </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
+                <div class="form-row">
                   Post title:
                 </div>
-                <div class="row">
-                  <input type="text" class="form-control" name="title" ng-model="post.postTitle" placeholder="My infosec issue is..." />
+                <div class="form-row">
+                  <input type="text" class="form-control" name="title" ng-model="post.postTitle" placeholder="My infosec issue is..." required />
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
+                <div class="form-row">
                   Message:
                 </div>
-                <div class="row">
-                  <textarea class="form-control" rows="10" ng-model="post.postBody" placeholder="Hello..."></textarea>
+                <div class="form-row">
+                  <textarea class="form-control" rows="10" ng-model="post.postBody" placeholder="Hello..." required></textarea>
                 </div>
               </div>
-              <div class="col-sm" style="padding-left: 3em">
-                <div class="row">
+              <div class="col-sm">
+                <div class="form-row">
+                  Sensitivity:
+                </div><div class="invalid-feedback">Please select an option</div>
+                <div class="form-row">
+                  <ul class="list-group">
+                    <li class="list-group-item list-group-item-danger">
+                      <div class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="top-secret" id="top-secret" required />
+                        <label class="custom-control-label" for="top-secret">
+                          Top secret (do not share; may contain company identifiable information)
+                        </label>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item list-group-item-warning">
+                      <div class="custom-control custom-radio">
+                          <input class="custom-control-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="sensitive" id="sensitive" required />
+                          <label class="custom-control-label" for="sensitive">
+                            Sensitive (information may be paraphrased elsewhere but not directly copied)
+                        </label>
+                      </div>
+                    </li>
+
+                    <li class="list-group-item list-group-item-success">
+                      <div class="custom-control custom-radio">
+                        <input class="custom-control-input" type="radio" name="sharingSecrecy" ng-model="post.sharingSecrecy" value="safe" id="safe" required />
+                        <label class="custom-control-label" for="safe">
+                          Safe to share (no personal nor identifiable information)
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="form-row">
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="anonymous" ng-model="post.postAnonymity" id="anonymous" />
                     <label for="anonymous" class="form-check-label">Post anonymously?</label>
                   </div>
                 </div>
-                <div class="row">
+                <div class="form-row">
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" name="limit" ng-model="post.enableLimitedAudience" id="limit" />
                     <label for="limit" class="form-check-label">Limit access to:</label>
                   </div>
                   <textarea class="form-control" rows="5" ng-model="post.postAudience" placeholder="Type names/groups here"></textarea>
                 </div>
-                <div class="row">
+                <div class="form-row">
                   Tags:
                 </div>
-                <div class="row">
+                <div class="form-row">
                   <textarea class="form-control" rows="3" ng-model="post.postTags" id="postTags" placeholder="Type tags here, comma separated"></textarea>
-                </div>
-                <div class="row">
-                  {{ enableLimitedAudience }}
                 </div>
               </div>
             </div>

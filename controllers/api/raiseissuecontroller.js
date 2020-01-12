@@ -10,8 +10,12 @@ const post = (req, res) => {
   issue.sensitivity = req.body.sharingSecrecy
   issue.anonymous = req.body.postAnonymity || false
   issue.accessLimited = req.body.enableLimitedAudience || false
-  issue.accessEmailList = req.body.postAudience.split(/,+ */)
-  issue.tagList = req.body.postTags.split(/,+ */)
+  issue.accessEmailList = req.body.postAudience
+    ? req.body.postAudience.split(/,+ */)
+    : []
+  issue.tagList = req.body.postTags
+    ? req.body.postTags.split(/,+ */)
+    : []
 
   issue.save((error) => {
     if (error) {
