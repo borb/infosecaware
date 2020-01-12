@@ -34,7 +34,7 @@ angular.module('infosecaware', [])
           },
           function(data) {
             console.error('raiseIssue http call failed', data)
-            window.alert("Failed to submit issue; Please wait and try again.")
+            window.alert('Failed to submit issue; Please wait and try again.')
           }
         )
     }
