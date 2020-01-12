@@ -51,7 +51,7 @@ angular.element(function() {
 $('#raiseIssueModal').on('show.bs.modal', function(e) {
   // autosuggestions for the post tags
   var $http = angular.injector(['ng']).get('$http')
-  $http.get('/api/v1/getPostTags')
+  $http.get('/api/v1/getPostMetadata')
     .then(
       function(res) {
         // success

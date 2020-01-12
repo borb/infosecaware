@@ -36,7 +36,7 @@ router.get('/community', authenticationcontroller.isAuthenticated, communitycont
 const apiRouter = express.Router()
 apiRouter
   .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
-  .get('/getPostTags', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostTags)
+  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostMetadata)
 
 router.use('/api/v1', apiRouter)
 

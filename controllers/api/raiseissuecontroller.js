@@ -32,7 +32,7 @@ const post = (req, res) => {
   })
 }
 
-const getPostTags = (req, res) => {
+const getPostMetadata = (req, res) => {
   const issues = mongoose.model('issues')
   issues
     .find()
@@ -47,5 +47,5 @@ const getPostTags = (req, res) => {
 
 export default {
   "post": post,
-  "getPostTags": getPostTags
+  "getPostMetadata": getPostMetadata
 }
