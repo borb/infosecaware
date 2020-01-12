@@ -26,7 +26,8 @@ const post = (req, res) => {
     }
 
     res.json({
-      success: true
+      success: true,
+      issueId: issue._id
     })
   })
 }
