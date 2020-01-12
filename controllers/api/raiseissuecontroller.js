@@ -34,14 +34,23 @@ const post = (req, res) => {
 
 const getPostMetadata = (req, res) => {
   const issues = mongoose.model('issues')
+  const users = mongoose.model('users')
   issues
     .find()
     .select('tagList -_id')
     .exec((error, results) => {
-      res.json({
-        success: true,
-        postTags: _.union(...results.map((result) => result.tagList))
-      })
+      const tagList = _.union(...results.map((result) => result.tagList))
+      users
+        .find()
+        .select('fullname email -_id')
+        .exec((error, results) => {
+          const userList = results.map((result) => {return {fullname: result.fullname, email: result.email}})
+          res.json({
+            success: true,
+            postTags: tagList,
+            userList: userList
+          })
+        })
     })
 }
 

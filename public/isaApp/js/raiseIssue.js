@@ -55,7 +55,7 @@ $('#raiseIssueModal').on('show.bs.modal', function(e) {
     .then(
       function(res) {
         // success
-        var instance = new AutoSuggest({
+        var postTagsInstance = new AutoSuggest({
           caseSensitive: false,
           suggestions: [
             {
@@ -65,7 +65,28 @@ $('#raiseIssueModal').on('show.bs.modal', function(e) {
           ]
         })
 
-        instance.addInputs(document.getElementById('postTags'))
+        // we could do this in the controller code, but the output would only
+        // ever make sense to AutoSuggest; this is short, can do it here
+        res.data.userList.map(function(elem) {
+          elem.insertHtml = elem.insertText = elem.email
+          delete elem.email
+          elem.show = elem.fullname
+          delete elem.fullname
+          elem.on = [elem.insertText, elem.show]
+        })
+
+        var accessListInstance = new AutoSuggest({
+          caseSensitive: false,
+          suggestions: [
+            {
+              trigger: '',
+              values: res.data.userList
+            }
+          ]
+        })
+
+        postTagsInstance.addInputs(document.getElementById('postTags'))
+        accessListInstance.addInputs(document.getElementById('postAudience'))
       },
       function() {
         // failure
