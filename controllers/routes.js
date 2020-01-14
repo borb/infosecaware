@@ -37,6 +37,7 @@ const apiRouter = express.Router()
 apiRouter
   .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
   .get('/getPostMetadata', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostMetadata)
+  .get('/getBoardData', authenticationcontroller.isAuthenticated, raiseissuecontroller.getBoardData)
 
 router.use('/api/v1', apiRouter)
 

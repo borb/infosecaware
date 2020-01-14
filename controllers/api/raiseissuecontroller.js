@@ -54,7 +54,34 @@ const getPostMetadata = (req, res) => {
     })
 }
 
+const getBoardData = (req, res) => {
+  const issues = mongoose.model('issues')
+  const users = mongoose.model('users')
+
+  // we'll build up the filter from data pulled from req.body
+  const filter = {}
+
+  // and we'll build the options based on pagination also
+  const options = {
+    skip: 0,
+    limit: 20,
+    sort: {
+      postedDate: 'desc'
+    }
+  }
+
+  issues
+    .find(filter, null, options)
+    .exec((error, results) => {
+      res.json({
+        success: true,
+        posts: results
+      })
+    })
+}
+
 export default {
   "post": post,
-  "getPostMetadata": getPostMetadata
+  "getPostMetadata": getPostMetadata,
+  "getBoardData": getBoardData
 }
