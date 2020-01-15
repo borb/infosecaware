@@ -56,22 +56,37 @@ const getPostMetadata = (req, res) => {
 
 const getBoardData = (req, res) => {
   const issues = mongoose.model('issues')
-  const users = mongoose.model('users')
 
   // we'll build up the filter from data pulled from req.body
   const filter = {}
 
-  // and we'll build the options based on pagination also
-  const options = {
-    skip: 0,
-    limit: 20,
-    sort: {
-      postedDate: 'desc'
-    }
-  }
-
   issues
-    .find(filter, null, options)
+    .aggregate([
+      {
+        $match: filter
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'authorEmail',
+          foreignField: 'email',
+          as: 'authorData'
+        }
+      },
+      {
+        $sort: {
+          postedDate: -1
+        }
+      },
+      {
+        // @todo take pagination from req.body
+        $skip: 0
+      },
+      {
+        // @todo take pagination from req.body
+        $limit: 20
+      }
+    ])
     .exec((error, results) => {
       res.json({
         success: true,
