@@ -1,12 +1,5 @@
 <div class="container">
   <ul class="list-group" >
-    <li class="list-group-item" ng-repeat="issue in issues">{{ issue.title }} <small>by {{ issue.authorEmail }}</small></li>
-    <!-- <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
-    <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
-    <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
-    <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
-    <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
-    <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
-    <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li> -->
+    <li ng-repeat="issue in issues" class="list-group-item list-group-item-{{ issue.listClass }}">{{ issue.title }} <small>by {{ issue.authorData[0].fullname }} on {{ issue.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</small></li ng-repeat="issue in issues">
   </ul>
 </div>

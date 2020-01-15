@@ -88,6 +88,18 @@ const getBoardData = (req, res) => {
       }
     ])
     .exec((error, results) => {
+      results.map((result) => {
+        result.listClass =
+          result.sensitivity === 'safe' ? 'success' :
+            (result.sensitivity === 'sensitive' ? 'warning' :
+              (result.sensitivity === 'top-secret' ? 'danger' : 'primary')
+            )
+
+        if (result.anonymous) {
+          result.authorData = [{fullname: '<redacted>'}]
+          result.authorEmail = '<redacted>'
+        }
+      })
       res.json({
         success: true,
         posts: results
