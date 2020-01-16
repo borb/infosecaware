@@ -1,4 +1,4 @@
-angular.module('infosecaware', [])
+infosecawareApplication
   .controller('communityController', ['$scope', '$http', function($scope, $http) {
     $scope.empty = {posts: []}
 

@@ -2,6 +2,10 @@ angular.element(function() {
   angular.bootstrap(document, ['infosecaware'])
 })
 
+// setup the application so we can reuse it without redeclaring the module elsewhere
+var infosecawareApplication = angular.module('infosecaware', [])
+
+// shared function to setup author and tag suggestions so they can be reused
 var setupAuthorTagSuggestions = function(tagElem, authorElem) {
   // autosuggestions for the post tags
   var $http = angular.injector(['ng']).get('$http')
@@ -51,3 +55,4 @@ var setupAuthorTagSuggestions = function(tagElem, authorElem) {
       }
     )
 }
+

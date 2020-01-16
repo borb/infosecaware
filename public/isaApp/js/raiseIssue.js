@@ -1,4 +1,4 @@
-angular.module('infosecaware', [])
+infosecawareApplication
   .controller('raiseIssueController', ['$scope', '$http', function($scope, $http) {
     $scope.master = {}
 
