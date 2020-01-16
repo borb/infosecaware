@@ -60,31 +60,38 @@ const getBoardData = (req, res) => {
   // we'll build up the filter from data pulled from req.body
   const filter = {}
 
-  issues
-    .aggregate([
-      {
-        $match: filter
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'authorEmail',
-          foreignField: 'email',
-          as: 'authorData'
-        }
-      },
-      {
-        $sort: {
-          postedDate: -1
-        }
-      },
-      {
-        $skip: req.body.page ? ((req.body.page * 15) - 1) : 0
-      },
-      {
-        $limit: 15
+  const issueAggregate = [
+    {
+      $lookup: {
+        from: 'users',
+        localField: 'authorEmail',
+        foreignField: 'email',
+        as: 'authorData'
       }
-    ])
+    },
+    {
+      $sort: {
+        postedDate: -1
+      }
+    },
+    {
+      $skip: req.body.page ? ((req.body.page * 15) - 1) : 0
+    },
+    {
+      $limit: 15
+    }
+  ]
+
+  if (req.body.filter.authors) {
+    const authors = req.body.filter.authors.split(/,+ */)
+    // match any of the provided authors ($or), not all ($and)!
+    const match = {$match: {}}
+    match.$match.$or = authors.map((author) => { return {authorEmail: author}})
+    issueAggregate.push(match)
+  }
+
+  issues
+    .aggregate(issueAggregate)
     .exec((error, results) => {
       results.map((result) => {
         result.listClass =
