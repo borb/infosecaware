@@ -68,17 +68,6 @@ const getBoardData = (req, res) => {
         foreignField: 'email',
         as: 'authorData'
       }
-    },
-    {
-      $sort: {
-        postedDate: -1
-      }
-    },
-    {
-      $skip: req.body.page ? ((req.body.page * 15) - 1) : 0
-    },
-    {
-      $limit: 15
     }
   ]
 
@@ -110,6 +99,28 @@ const getBoardData = (req, res) => {
       issueAggregate.push(match)
     }
   }
+
+  // filter by any of the specified tags
+  if (req.body.filter.tags) {
+    const tags = req.body.filter.tags.split(/,+ */)
+    const match = {$match: {tagList: {$in: tags}}}
+    issueAggregate.push(match)
+  }
+
+  // sort, skip and limit after matching
+  [
+    {
+      $sort: {
+        postedDate: -1
+      }
+    },
+    {
+      $skip: req.body.page ? ((req.body.page * 15) - 1) : 0
+    },
+    {
+      $limit: 15
+    }
+  ].map((aggregatePattern) => issueAggregate.push(aggregatePattern))
 
   issues
     .aggregate(issueAggregate)
