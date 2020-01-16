@@ -148,6 +148,7 @@ const getBoardData = (req, res) => {
 
 const getIssue = (req, res) => {
   const issues = mongoose.model('issues')
+  const ObjectId = mongoose.Types.ObjectId
 
   if (!req.params.issueId) {
     res.json({
@@ -166,8 +167,10 @@ const getIssue = (req, res) => {
           foreignField: 'email',
           as: 'authorData'
         },
+      },
+      {
         $match: {
-          _id: req.params.issueId
+          _id: new ObjectId(req.params.issueId)
         }
       }
     ])

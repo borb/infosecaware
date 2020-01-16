@@ -8,7 +8,7 @@ infosecawareApplication
     }
 
     $scope.loadIssue = function(issueId, nextAction) {
-      $http.get('/getIssue/' + issueId)
+      $http.get('/api/v1/getIssue/' + issueId)
         .then(
           function(res) {
             // successful fetch
