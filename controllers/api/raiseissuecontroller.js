@@ -82,12 +82,33 @@ const getBoardData = (req, res) => {
     }
   ]
 
+  // filter by authors
   if (req.body.filter.authors) {
     const authors = req.body.filter.authors.split(/,+ */)
     // match any of the provided authors ($or), not all ($and)!
     const match = {$match: {}}
     match.$match.$or = authors.map((author) => { return {authorEmail: author}})
     issueAggregate.push(match)
+  }
+
+  // filter by issue sensitivity
+  if (req.body.filter.topsecret || req.body.filter.sensitive || req.body.filter.safe) {
+    const match = {$match: {}}
+    const sensitivitySet = []
+
+    if (req.body.filter.topsecret)
+      sensitivitySet.push({sensitivity: 'top-secret'})
+
+    if (req.body.filter.sensitive)
+      sensitivitySet.push({sensitivity: 'sensitive'})
+
+    if (req.body.filter.safe)
+      sensitivitySet.push({sensitivity: 'safe'})
+
+    if (sensitivitySet.length) {
+      match.$match.$or = sensitivitySet
+      issueAggregate.push(match)
+    }
   }
 
   issues
