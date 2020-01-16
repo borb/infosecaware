@@ -97,16 +97,16 @@ const getBoardData = (req, res) => {
     const sensitivitySet = []
 
     if (req.body.filter.topsecret)
-      sensitivitySet.push({sensitivity: 'top-secret'})
+      sensitivitySet.push('top-secret')
 
     if (req.body.filter.sensitive)
-      sensitivitySet.push({sensitivity: 'sensitive'})
+      sensitivitySet.push('sensitive')
 
     if (req.body.filter.safe)
-      sensitivitySet.push({sensitivity: 'safe'})
+      sensitivitySet.push('safe')
 
     if (sensitivitySet.length) {
-      match.$match.$or = sensitivitySet
+      match.$match.sensitivity = {$in: sensitivitySet}
       issueAggregate.push(match)
     }
   }
