@@ -7,7 +7,7 @@ angular.module('infosecaware', [])
     }
 
     $scope.update = function() {
-      $http.post('/api/v1/getBoardData', {page: $scope.page})
+      $http.post('/api/v1/getBoardData', {page: $scope.page, filter: $scope.filter})
         .then(
           function(res) {
             // success
@@ -20,6 +20,11 @@ angular.module('infosecaware', [])
         )
     }
 
+    $scope.updateFilter = function() {
+      $scope.page = 0
+      $scope.update()
+    }
+
     $scope.nextPage = function() {
       $scope.page++
       $scope.update()
@@ -30,8 +35,16 @@ angular.module('infosecaware', [])
       $scope.update()
     }
 
+    // setup defaults
     $scope.fill($scope.empty)
     $scope.page = 0
+    $scope.filter = {
+      sensitive: true,
+      safe: true,
+      topsecret: true
+    }
+
+    // call update to get our initial data
     $scope.update()
   }])
 
