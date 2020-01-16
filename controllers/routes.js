@@ -5,7 +5,7 @@ import landingcontroller from './server/landingcontroller.js'
 import communitycontroller from './server/communitycontroller.js'
 import authenticationcontroller from './server/authenticationcontroller.js'
 
-import raiseissuecontroller from './api/raiseissuecontroller.js'
+import issuecontroller from './api/issuecontroller.js'
 
 const router = express.Router()
 
@@ -35,9 +35,9 @@ router.get('/community', authenticationcontroller.isAuthenticated, communitycont
 // api calls (nested router so we don't have to keep writing full path)
 const apiRouter = express.Router()
 apiRouter
-  .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
-  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostMetadata)
-  .post('/getBoardData', authenticationcontroller.isAuthenticated, raiseissuecontroller.getBoardData)
+  .post('/raiseIssue', authenticationcontroller.isAuthenticated, issuecontroller.post)
+  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, issuecontroller.getPostMetadata)
+  .post('/getBoardData', authenticationcontroller.isAuthenticated, issuecontroller.getBoardData)
 
 router.use('/api/v1', apiRouter)
 
