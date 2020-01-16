@@ -29,7 +29,7 @@ infosecawareApplication
           function(data) {
             // success happened
             // @todo refresh background view (perhaps render issue?)
-            $scope.reset
+            $scope.reset()
             $('#raiseIssueModal').modal('hide')
           },
           function(data) {
