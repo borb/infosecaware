@@ -60,6 +60,8 @@ const getBoardData = (req, res) => {
   // we'll build up the filter from data pulled from req.body
   const filter = {}
 
+  // @todo add $match to aggregate to ensure either limited audience is deselected or
+  // our email address is in the audience list
   const issueAggregate = [
     {
       $lookup: {
@@ -158,6 +160,8 @@ const getIssue = (req, res) => {
     return
   }
 
+  // @todo add $match to aggregate to ensure either limited audience is deselected or
+  // our email address is in the audience list
   issues
     .aggregate([
       {
