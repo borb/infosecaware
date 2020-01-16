@@ -5,3 +5,7 @@
 li.list-issue:hover {
     cursor: pointer;
 }
+
+a.hreflessLink:hover {
+    cursor: pointer;
+}
