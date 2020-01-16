@@ -6,6 +6,11 @@ const issuesSchema = new mongoose.Schema({
     required: true,
     index: true
   },
+  postedDate: {
+    type: Date,
+    index: true,
+    default: Date.now
+  },
   title: {
     type: String,
     required: true,

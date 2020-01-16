@@ -44,21 +44,13 @@
     <div class="col-sm">
       <h2>Recent posts...</h2>
 
-      <div class="container">
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
-          <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
-          <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
-          <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
-          <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
-          <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
-          <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li>
-        </ul>
+      <div class="container" ng-controller="communityController">
+        <% include parts/communityboard.ejs %>
       </div>
     </div>
   </div>
 </div>
 
-<% include parts/raiseIssue.ejs %>
+<script src="/isaApp/js/community.js"></script>
 
 <% include parts/footer.ejs %>

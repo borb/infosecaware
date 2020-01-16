@@ -1,91 +1,67 @@
 <% include parts/header.ejs %>
 
-<div class="container-xl">
+<div class="container-xl" ng-controller="communityController">
   <div class="row">
     <h1>Community posts</h1>
   </div>
   <div class="row">&nbsp;</div>
   <div class="row">
     <div class="col-sm-2">
-      <div class="form-group">
-        Tags:
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="tag1" id="tag1" />
-            <label for="tag1" class="form-check-label">tag1</label>
+      <form>
+        <div class="form-row">
+          Tags:
+        </div>
+        <div class="form-row">
+          <textarea class="form-control" rows="3" id="postTags" ng-model="filter.tags" placeholder="Start typing to filter by tag"></textarea>
+        </div>
+
+        <div class="form-row">
+          Authors:
+        </div>
+        <div class="form-row">
+          <textarea class="form-control" rows="3" id="postAudience" ng-model="filter.authors" placeholder="Start typing to filter by author"></textarea>
+        </div>
+
+        <div class="form-row">
+          Secrecy:
+        </div>
+        <div class="form-row">
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="top-secret" ng-model="filter.topsecret" value="{{ true }}" />
+            <label class="custom-control-label" for="top-secret">Top secret</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="sensitive" ng-model="filter.sensitive" value="{{ true }}" />
+            <label class="custom-control-label" for="sensitive">Sensitive</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="safe" ng-model="filter.safe" value="{{ true }}" />
+            <label class="custom-control-label" for="safe">Safe to share</label>
           </div>
         </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="tag2" id="tag2" />
-            <label for="tag2" class="form-check-label">tag2</label>
-          </div>
+
+        <div class="form-row">&nbsp;</div>
+        <div class="form-row">
+          <button type="button" class="btn btn-primary" ng-click="updateFilter()">Update</button>
         </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="tag3" id="tag3" />
-            <label for="tag3" class="form-check-label">tag3</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        Authors:
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="a123" id="a123" />
-            <label for="a123" class="form-check-label">Scott Chegg</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="b123" id="b123" />
-            <label for="b123" class="form-check-label">Bob Bobbins</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="c123" id="c123" />
-            <label for="c123" class="form-check-label">Paul Theotherone</label>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        Secrecy:
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="top-secret" id="top-secret" />
-            <label for="top-secret" class="form-check-label">Top secret</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="sensitive" id="sensitive" />
-            <label for="sensitive" class="form-check-label">Sensitive</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" name="safe" id="safe" />
-            <label for="safe" class="form-check-label">Safe to share</label>
-          </div>
-        </div>
-      </div>
+      </form>
     </div>
 
-    <div class="col-sm-6">
-      <div class="container">
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-danger">SQL injection exfiltration<small> by Bob Bobbins</small></li>
-          <li class="list-group-item list-group-item-warning">Network probe<small> by Scott Chegg</small></li>
-          <li class="list-group-item list-group-item-danger">Active directory breech on corporate network<small> by Hugh G Mistake</small></li>
-          <li class="list-group-item list-group-item-warning">Spear phishing targetting support teams<small> by Arthur Biscuit</small></li>
-          <li class="list-group-item list-group-item-danger">Rootkit found on production servers<small> by Julie Vemealone</small></li>
-          <li class="list-group-item list-group-item-success">Blocking USB ports at operating system level<small> by Scott Chegg</small></li>
-          <li class="list-group-item list-group-item-danger">SIM Swap attack on 2FA<small> by IT Administrator</small></li>
-        </ul>
+    <div class="col-xl-10">
+      <div class="row">
+        <% include parts/communityboard.ejs %>
+      </div>
+      <div class="row">&nbsp;</div>
+      <div class="row">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-success" ng-disabled="!board.hasMore" ng-click="nextPage()">Next page</button>
+          <button type="button" class="btn btn-primary" ng-disabled="!board.hasPrevious" ng-click="previousPage()">Previous page</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script src="/isaApp/js/community.js"></script>
 
 <% include parts/footer.ejs %>

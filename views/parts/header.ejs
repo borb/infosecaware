@@ -10,15 +10,21 @@
 
     <title>infosecaware :: landing</title>
 
-    <style>small { text-decoration-style: dotted; }</style>
     <script src="/assets/jquery/jquery-3.4.1.min.js"></script>
     <script src="/assets/tagcloud/tagcloud.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="/assets/popper/popper.min.js"></script>
     <script src="/assets/angular/angular.min.js"></script>
     <script src="/assets/autosuggest/js/AutoSuggest.js"></script>
+
+    <script src="/isaApp/js/bootstrap.js"></script>
   </head>
   <body>
+    <% include raiseIssue.ejs %>
+
+    <!--
+      @todo: turn links into buttons for prominence?
+    -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="#">infosecaware</a>
 
