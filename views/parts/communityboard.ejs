@@ -1,5 +1,5 @@
 <div class="container">
   <ul class="list-group" >
-    <li ng-repeat="issue in issues" class="list-group-item list-group-item-{{ issue.listClass }}">{{ issue.title }} <small>by {{ issue.authorData[0].fullname }} on {{ issue.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</small></li ng-repeat="issue in issues">
+    <li ng-repeat="issue in board.posts" class="list-group-item list-group-item-{{ issue.listClass }}">{{ issue.title }} <small>by {{ issue.authorData[0].fullname }} on {{ issue.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</small></li ng-repeat="issue in issues">
   </ul>
 </div>

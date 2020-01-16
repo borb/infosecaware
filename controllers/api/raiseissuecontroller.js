@@ -79,12 +79,10 @@ const getBoardData = (req, res) => {
         }
       },
       {
-        // @todo take pagination from req.body
-        $skip: 0
+        $skip: req.body.page ? ((req.body.page * 15) - 1) : 0
       },
       {
-        // @todo take pagination from req.body
-        $limit: 20
+        $limit: 15
       }
     ])
     .exec((error, results) => {
@@ -102,7 +100,9 @@ const getBoardData = (req, res) => {
       })
       res.json({
         success: true,
-        posts: results
+        posts: results,
+        hasPrevious: req.body.page ? true : false,
+        hasMore: (results.length < 15) ? false : true
       })
     })
 }

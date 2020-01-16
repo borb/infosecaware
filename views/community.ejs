@@ -42,8 +42,17 @@
       </form>
     </div>
 
-    <div class="col-sm-6">
-      <% include parts/communityboard.ejs %>
+    <div class="col-xl-10">
+      <div class="row">
+        <% include parts/communityboard.ejs %>
+      </div>
+      <div class="row">&nbsp;</div>
+      <div class="row">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-success" ng-disabled="!board.hasMore" ng-click="nextPage()">Next page</button>
+          <button type="button" class="btn btn-primary" ng-disabled="!board.hasPrevious" ng-click="previousPage()">Previous page</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

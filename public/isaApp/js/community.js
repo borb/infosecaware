@@ -1,17 +1,17 @@
 angular.module('infosecaware', [])
   .controller('communityController', ['$scope', '$http', function($scope, $http) {
-    $scope.noIssues = []
+    $scope.empty = {posts: []}
 
     $scope.fill = function(data) {
-      $scope.issues = angular.copy(data)
+      $scope.board = angular.copy(data)
     }
 
     $scope.update = function() {
-      $http.get('/api/v1/getBoardData')
+      $http.post('/api/v1/getBoardData', {page: $scope.page})
         .then(
           function(res) {
             // success
-            $scope.fill(res.data.posts)
+            $scope.fill(res.data)
           },
           function() {
             // error
@@ -20,7 +20,18 @@ angular.module('infosecaware', [])
         )
     }
 
-    $scope.fill($scope.noIssues)
+    $scope.nextPage = function() {
+      $scope.page++
+      $scope.update()
+    }
+
+    $scope.previousPage = function() {
+      $scope.page--
+      $scope.update()
+    }
+
+    $scope.fill($scope.empty)
+    $scope.page = 0
     $scope.update()
   }])
 
