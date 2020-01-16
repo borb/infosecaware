@@ -146,8 +146,42 @@ const getBoardData = (req, res) => {
     })
 }
 
+const getIssue = (req, res) => {
+  const issues = mongoose.model('issues')
+
+  if (!req.params.issueId) {
+    res.json({
+      success: false,
+      error: 'issue ID missing or malformed'
+    })
+    return
+  }
+
+  issues
+    .aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'authorEmail',
+          foreignField: 'email',
+          as: 'authorData'
+        },
+        $match: {
+          _id: req.params.issueId
+        }
+      }
+    ])
+    .exec((error, results) => {
+      res.json({
+        success: true,
+        post: results.length ? results[0] : {}
+      })
+    })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
-  "getBoardData": getBoardData
+  "getBoardData": getBoardData,
+  "getIssue": getIssue
 }

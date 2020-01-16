@@ -38,6 +38,7 @@ apiRouter
   .post('/raiseIssue', authenticationcontroller.isAuthenticated, issuecontroller.post)
   .get('/getPostMetadata', authenticationcontroller.isAuthenticated, issuecontroller.getPostMetadata)
   .post('/getBoardData', authenticationcontroller.isAuthenticated, issuecontroller.getBoardData)
+  .get('/getIssue/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.getIssue)
 
 router.use('/api/v1', apiRouter)
 

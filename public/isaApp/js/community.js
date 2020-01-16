@@ -35,6 +35,10 @@ infosecawareApplication
       $scope.update()
     }
 
+    $scope.openIssue = function(issueId) {
+      $scope.$broadcast('issueViewer', issueId)
+    }
+
     // setup defaults
     $scope.fill($scope.empty)
     $scope.page = 0
