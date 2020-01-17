@@ -181,7 +181,13 @@ const getIssue = (req, res) => {
           let: {issueId: '$_id'},
           as: 'comments',
           pipeline: [
-            {$sort: {postedDate: -1}}
+            {$sort: {postedDate: -1}},
+            {$lookup: {
+              from: 'users',
+              localField: 'authorEmail',
+              foreignField: 'email',
+              as: 'authorData'
+            }}
           ]
         }
       },

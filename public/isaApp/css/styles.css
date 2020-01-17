@@ -17,10 +17,20 @@ div.comment-area {
     padding-right: 5px;
 }
 
+div.comment-area .form-row {
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
 div.comment-area .form-row:nth-child(even) {
-    background-color: #dcdcdc;
+    background-color: #eeeeee;
 }
 
 div.comment-area .form-row:nth-child(odd) {
-    background-color: #cdcdcd;
+    background-color: #dddddd;
+}
+
+div.comment-button {
+    margin-top: 5px;
 }
