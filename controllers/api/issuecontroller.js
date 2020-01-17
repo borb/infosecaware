@@ -60,6 +60,8 @@ const getBoardData = (req, res) => {
   // we'll build up the filter from data pulled from req.body
   const filter = {}
 
+  // @todo add $match to aggregate to ensure either limited audience is deselected or
+  // our email address is in the audience list
   const issueAggregate = [
     {
       $lookup: {
@@ -146,8 +148,47 @@ const getBoardData = (req, res) => {
     })
 }
 
+const getIssue = (req, res) => {
+  const issues = mongoose.model('issues')
+  const ObjectId = mongoose.Types.ObjectId
+
+  if (!req.params.issueId) {
+    res.json({
+      success: false,
+      error: 'issue ID missing or malformed'
+    })
+    return
+  }
+
+  // @todo add $match to aggregate to ensure either limited audience is deselected or
+  // our email address is in the audience list
+  issues
+    .aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'authorEmail',
+          foreignField: 'email',
+          as: 'authorData'
+        },
+      },
+      {
+        $match: {
+          _id: new ObjectId(req.params.issueId)
+        }
+      }
+    ])
+    .exec((error, results) => {
+      res.json({
+        success: true,
+        post: results.length ? results[0] : {}
+      })
+    })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
-  "getBoardData": getBoardData
+  "getBoardData": getBoardData,
+  "getIssue": getIssue
 }

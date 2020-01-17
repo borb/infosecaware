@@ -1,5 +1,5 @@
 infosecawareApplication
-  .controller('raiseIssueController', ['$scope', '$http', function($scope, $http) {
+  .controller('raiseIssueController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.master = {}
 
     $scope.reset = function() {
@@ -28,9 +28,11 @@ infosecawareApplication
         .then(
           function(data) {
             // success happened
-            // @todo refresh background view (perhaps render issue?)
-            $scope.reset
+            $scope.reset()
             $('#raiseIssueModal').modal('hide')
+
+            // trigger the issue view to update (if one is present onscreen)
+            $rootScope.$broadcast('refreshIssueView')
           },
           function(data) {
             console.error('raiseIssue http call failed', data)

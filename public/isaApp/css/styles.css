@@ -1,3 +1,11 @@
 .dropdown {
     z-index: 1051;
 }
+
+li.list-issue:hover {
+    cursor: pointer;
+}
+
+a.hreflessLink:hover {
+    cursor: pointer;
+}

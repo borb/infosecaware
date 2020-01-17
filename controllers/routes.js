@@ -5,15 +5,9 @@ import landingcontroller from './server/landingcontroller.js'
 import communitycontroller from './server/communitycontroller.js'
 import authenticationcontroller from './server/authenticationcontroller.js'
 
-import raiseissuecontroller from './api/raiseissuecontroller.js'
+import issuecontroller from './api/issuecontroller.js'
 
 const router = express.Router()
-
-// @todo create a favicon and specify in link meta
-// this mutes exceptions being displayed until we have completed that
-router.get('/favicon.ico', (req, res) => {
-  res.sendStatus(404)
-})
 
 // index page; it's unauthenticated, so a user can log in
 router.get('/', indexpagecontroller)
@@ -35,9 +29,10 @@ router.get('/community', authenticationcontroller.isAuthenticated, communitycont
 // api calls (nested router so we don't have to keep writing full path)
 const apiRouter = express.Router()
 apiRouter
-  .post('/raiseIssue', authenticationcontroller.isAuthenticated, raiseissuecontroller.post)
-  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, raiseissuecontroller.getPostMetadata)
-  .post('/getBoardData', authenticationcontroller.isAuthenticated, raiseissuecontroller.getBoardData)
+  .post('/raiseIssue', authenticationcontroller.isAuthenticated, issuecontroller.post)
+  .get('/getPostMetadata', authenticationcontroller.isAuthenticated, issuecontroller.getPostMetadata)
+  .post('/getBoardData', authenticationcontroller.isAuthenticated, issuecontroller.getBoardData)
+  .get('/getIssue/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.getIssue)
 
 router.use('/api/v1', apiRouter)
 
