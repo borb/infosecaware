@@ -4,7 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start-dev": "nodemon ./bin/www"
+  },
+  "nodemonConfig": {
+    "ignore": ["public/*", "views/*"]
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -19,7 +23,8 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "eslint": "^6.7.2"
+    "eslint": "^6.7.2",
+    "nodemon": "^2.0.2"
   },
   "engines": {
     "node": ">=13.0.0"
