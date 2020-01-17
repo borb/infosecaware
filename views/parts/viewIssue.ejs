@@ -37,6 +37,18 @@
             <div class="col-sm">
               <!-- right -->
               <div class="form-row">Comments:</div>
+              <div class="form-row">
+                <textarea class="form-control" rows="4" placeholder="Write your reply here..."></textarea>
+              </div>
+              <div class="form-row">&nbsp;</div>
+              <div class="form-row">
+                <div class="comment-area">
+                  <div class="form-row" ng-repeat="comment in issue.comments">
+                    <p>Comment by {{ comment.authorEmail }} on {{ comment.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</p>
+                    <p ng-bind-html="comment.comment | nl2br"></p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

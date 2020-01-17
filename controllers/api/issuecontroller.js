@@ -176,6 +176,16 @@ const getIssue = (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'comments',
+          let: {issueId: '$_id'},
+          as: 'comments',
+          pipeline: [
+            {$sort: {postedDate: -1}}
+          ]
+        }
+      },
+      {
         $match: {
           $or: [
             {accessLimited: false},

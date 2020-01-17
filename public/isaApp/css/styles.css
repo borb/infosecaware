@@ -9,3 +9,18 @@ li.list-issue:hover {
 a.hreflessLink:hover {
     cursor: pointer;
 }
+
+div.comment-area {
+    height: 75%;
+    overflow-y: scroll;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div.comment-area .form-row:nth-child(even) {
+    background-color: #dcdcdc;
+}
+
+div.comment-area .form-row:nth-child(odd) {
+    background-color: #cdcdcd;
+}

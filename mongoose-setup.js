@@ -32,3 +32,4 @@ process.on('SIGINT', () => {
 import './models/users.js'
 import './models/loginSessions.js'
 import './models/issues.js'
+import './models/comments.js'
