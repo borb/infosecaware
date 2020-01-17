@@ -57,11 +57,7 @@ const getPostMetadata = (req, res) => {
 const getBoardData = (req, res) => {
   const issues = mongoose.model('issues')
 
-  // we'll build up the filter from data pulled from req.body
-  const filter = {}
-
-  // @todo add $match to aggregate to ensure either limited audience is deselected or
-  // our email address is in the audience list
+  // initial aggregate setup: include author credentials, and don't load issues we aren't permitted to view
   const issueAggregate = [
     {
       $lookup: {
@@ -69,6 +65,14 @@ const getBoardData = (req, res) => {
         localField: 'authorEmail',
         foreignField: 'email',
         as: 'authorData'
+      }
+    },
+    {
+      $match: {
+        $or: [
+          {accessLimited: false},
+          {accessEmailList: req.authUser.email}
+        ]
       }
     }
   ]
@@ -160,8 +164,7 @@ const getIssue = (req, res) => {
     return
   }
 
-  // @todo add $match to aggregate to ensure either limited audience is deselected or
-  // our email address is in the audience list
+  // initial aggregate setup: include author credentials, and don't load issues we aren't permitted to view
   issues
     .aggregate([
       {
@@ -174,13 +177,21 @@ const getIssue = (req, res) => {
       },
       {
         $match: {
+          $or: [
+            {accessLimited: false},
+            {accessEmailList: req.authUser.email}
+          ]
+        }
+      },
+      {
+        $match: {
           _id: new ObjectId(req.params.issueId)
         }
       }
     ])
     .exec((error, results) => {
       res.json({
-        success: true,
+        success: results.length ? true : false,
         post: results.length ? results[0] : {}
       })
     })

@@ -12,6 +12,16 @@ it features:
   * tagging facilities, with the ability to limit search results by tag
   * a sensitivity indicator, displayed above the post: posts marked "top secret" are only viewable by administrators, specified users and the author
 
+## starting the application
+
+To run the application in production mode:
+
+> ```npm start```
+
+To run the application in development mode:
+
+> ```npm run start-dev```
+
 ## author
 
 Rob Andrews <ra17aab@herts.ac.uk> / <rob@aphlor.org>
@@ -43,3 +53,4 @@ the following libraries are installed from npmjs:
 | mongoose | https://mongoosejs.com | MIT |
 | morgan (expressjs) | https://github.com/expressjs/morgan#readme | MIT |
 | uuid | https://github.com/kelektiv/node-uuid#readme | MIT |
+| nodemon | https://github.com/remy/nodemon | MIT |
