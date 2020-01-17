@@ -39,14 +39,25 @@ infosecawareApplication
       $scope.$broadcast('issueViewer', issueId)
     }
 
-    // setup defaults
-    $scope.fill($scope.empty)
-    $scope.page = 0
-    $scope.filter = {
-      sensitive: true,
-      safe: true,
-      topsecret: true
+    $scope.setup = function() {
+      $scope.fill($scope.empty)
+      $scope.page = 0
+      $scope.filter = {
+        sensitive: true,
+        safe: true,
+        topsecret: true
+      }
     }
+
+    // listen for requests to update the board view
+    $scope.$on('refreshIssueView', function() {
+      // set the view to defaults so our new issue is displayed at the top
+      $scope.setup()
+      $scope.update()
+    })
+
+    // setup defaults
+    $scope.setup()
 
     // call update to get our initial data
     $scope.update()
