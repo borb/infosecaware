@@ -251,8 +251,7 @@ const getTagCounts = (req, res) => {
       $match: {
         count: {$gte: 1}
       }
-    },
-    {$limit: 100}
+    }
   ]).exec((error, results) => {
     res.json({
       success: true,
