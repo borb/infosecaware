@@ -23,6 +23,24 @@ infosecawareApplication
         )
     }
 
+    $scope.submitComment = function() {
+      $http.post('/api/v1/postComment', {
+        issueId: $scope.issue._id,
+        comment: $scope.comment
+      })
+        .then(
+          function(res) {
+            // successful post
+            $scope.comment = ''
+            $scope.loadIssue($scope.issue._id, function() {})
+          },
+          function() {
+            // error posting comment
+            console.error('failed to post comment on issue:', $scope.issue._id)
+          }
+        )
+    }
+
     // listener for view events emitted by communityController frontend
     $scope.$on('issueViewer', function(event, issueId) {
       $scope.loadIssue(issueId, function() {
@@ -30,5 +48,6 @@ infosecawareApplication
       })
     })
 
+    $scope.comment = ''
     $scope.reset()
   }])

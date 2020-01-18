@@ -3,7 +3,19 @@ angular.element(function() {
 })
 
 // setup the application so we can reuse it without redeclaring the module elsewhere
-var infosecawareApplication = angular.module('infosecaware', [])
+var infosecawareApplication = angular.module('infosecaware', ['ngSanitize'])
+
+// register a filter that allows us to retain newlines when outputting text
+infosecawareApplication.filter('nl2br', ['$sanitize', function($sanitize) {
+  return function(input) {
+    return $sanitize(
+      input
+        .replace(/>/g, '&gt;')
+        .replace(/</g, '&lt;')
+        .replace(/\n/g, '<br/>')
+    )
+  }
+}])
 
 // shared function to setup author and tag suggestions so they can be reused
 var setupAuthorTagSuggestions = function(tagElem, authorElem) {

@@ -176,6 +176,22 @@ const getIssue = (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: 'comments',
+          let: {issueId: '$_id'},
+          as: 'comments',
+          pipeline: [
+            {$sort: {postedDate: -1}},
+            {$lookup: {
+              from: 'users',
+              localField: 'authorEmail',
+              foreignField: 'email',
+              as: 'authorData'
+            }}
+          ]
+        }
+      },
+      {
         $match: {
           $or: [
             {accessLimited: false},
@@ -197,9 +213,29 @@ const getIssue = (req, res) => {
     })
 }
 
+const postComment = (req, res) => {
+  const ObjectId = mongoose.Types.ObjectId
+  let comment = new (mongoose.model('comments'))()
+  comment.issueId = new ObjectId(req.body.issueId)
+  comment.authorEmail = req.authUser.email
+  comment.comment = req.body.comment
+
+  comment.save((error) => {
+    if (error) {
+      res.status(500).json({
+        success: false
+      })
+      return
+    }
+
+    res.json({success: true})
+  })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
   "getBoardData": getBoardData,
-  "getIssue": getIssue
+  "getIssue": getIssue,
+  "postComment": postComment
 }

@@ -37,6 +37,21 @@
             <div class="col-sm">
               <!-- right -->
               <div class="form-row">Comments:</div>
+              <div class="form-row">
+                <textarea class="form-control" rows="4" ng-model="comment" placeholder="Write your reply here..."></textarea>
+              </div>
+              <div class="form-row comment-button">
+                <button type="button" class="btn btn-success" ng-click="submitComment()">Post comment</button>
+              </div>
+              <div class="form-row">&nbsp;</div>
+              <div class="form-row">
+                <div class="comment-area">
+                  <div class="form-row" ng-repeat="comment in issue.comments">
+                    <p>Comment by {{ comment.authorData[0].fullname }} on {{ comment.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</p>
+                    <p ng-bind-html="comment.comment | nl2br"></p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
