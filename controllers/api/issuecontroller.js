@@ -72,16 +72,9 @@ const getBoardData = (req, res) => {
     {
       $lookup: {
         from: 'votes',
-        let: {issueId: '$_id'},
-        as: 'votes',
-        pipeline: [
-          {
-            $group: {
-              _id: '$up',
-              count: {$sum: 1}
-            }
-          }
-        ]
+        localField: '_id',
+        foreignField: 'issueId',
+        as: 'votes'
       }
     },
     {
@@ -169,10 +162,10 @@ const getBoardData = (req, res) => {
         }
 
         result.votes.map((vote) => {
-          if (vote._id === false)
-            voteData.down = vote.count
+          if (vote.up === false)
+            voteData.down++
           else
-            voteData.up = vote.count
+            voteData.up++
         })
 
         result.votes = voteData
@@ -215,12 +208,14 @@ const getIssue = (req, res) => {
           as: 'comments',
           pipeline: [
             {$sort: {postedDate: -1}},
-            {$lookup: {
-              from: 'users',
-              localField: 'authorEmail',
-              foreignField: 'email',
-              as: 'authorData'
-            }}
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'authorEmail',
+                foreignField: 'email',
+                as: 'authorData'
+              }
+            }
           ]
         }
       },
