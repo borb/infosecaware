@@ -1,6 +1,10 @@
 <div class="container">
   <ul class="list-group" >
-    <li ng-repeat="issue in board.posts" ng-click="openIssue(issue._id)" class="list-issue list-group-item list-group-item-{{ issue.listClass }}">{{ issue.title }} <small>by {{ issue.authorData[0].fullname }} on {{ issue.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</small></li>
+    <li ng-repeat="issue in board.posts" ng-click="openIssue(issue._id)" class="list-issue list-group-item list-group-item-{{ issue.listClass }}">
+      {{ issue.title }}
+      <small>by {{ issue.authorData[0].fullname }} on {{ issue.postedDate | date:'dd/MM/yyyy @ HH:mm' }}</small>
+      <span class="votes">👍 ({{ issue.votes.up }}) / 👎 ({{ issue.votes.down }})</span>
+    </li>
   </ul>
 </div>
 

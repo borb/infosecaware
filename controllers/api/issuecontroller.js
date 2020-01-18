@@ -70,6 +70,21 @@ const getBoardData = (req, res) => {
       }
     },
     {
+      $lookup: {
+        from: 'votes',
+        let: {issueId: '$_id'},
+        as: 'votes',
+        pipeline: [
+          {
+            $group: {
+              _id: '$up',
+              count: {$sum: 1}
+            }
+          }
+        ]
+      }
+    },
+    {
       $match: {
         $or: [
           {accessLimited: false},
@@ -134,16 +149,33 @@ const getBoardData = (req, res) => {
     .aggregate(issueAggregate)
     .exec((error, results) => {
       results.map((result) => {
+        // setup colourisation for list class
         result.listClass =
           result.sensitivity === 'safe' ? 'success' :
             (result.sensitivity === 'sensitive' ? 'warning' :
               (result.sensitivity === 'top-secret' ? 'danger' : 'primary')
             )
 
+        // redact identity for anonymous posts
         if (result.anonymous) {
           result.authorData = [{fullname: '<redacted>'}]
           result.authorEmail = '<redacted>'
         }
+
+        // consolidate vote data into a useful format
+        let voteData = {
+          up: 0,
+          down: 0
+        }
+
+        result.votes.map((vote) => {
+          if (vote._id === false)
+            voteData.down = vote.count
+          else
+            voteData.up = vote.count
+        })
+
+        result.votes = voteData
       })
       res.json({
         success: true,
