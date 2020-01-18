@@ -38,7 +38,10 @@
               <!-- right -->
               <div class="form-row">Comments:</div>
               <div class="form-row">
-                <textarea class="form-control" rows="4" placeholder="Write your reply here..."></textarea>
+                <textarea class="form-control" rows="4" ng-model="comment" placeholder="Write your reply here..."></textarea>
+              </div>
+              <div class="form-row comment-button">
+                <button type="button" class="btn btn-success" ng-click="submitComment()">Post comment</button>
               </div>
               <div class="form-row">&nbsp;</div>
               <div class="form-row">

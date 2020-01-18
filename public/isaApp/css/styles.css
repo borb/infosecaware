@@ -23,6 +23,10 @@ div.comment-area .form-row {
     border-radius: 5px;
 }
 
+div.comment-area .form-row p {
+    width: 100%;
+}
+
 div.comment-area .form-row:nth-child(even) {
     background-color: #eeeeee;
 }
