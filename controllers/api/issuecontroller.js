@@ -240,7 +240,7 @@ const getTagCounts = (req, res) => {
         tagList: {$not: {$size: 0}}
       }
     },
-    {$unwind: "$tagList"},
+    {$unwind: '$tagList'},
     {
       $group: {
         _id: {$toLower: '$tagList'},
