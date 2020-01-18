@@ -35,6 +35,9 @@ apiRouter
   .get('/getIssue/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.getIssue)
   .post('/postComment', authenticationcontroller.isAuthenticated, issuecontroller.postComment)
   .get('/getTagCounts', authenticationcontroller.isAuthenticated, issuecontroller.getTagCounts)
+  .get('/upVote/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.upVote)
+  .get('/downVote/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.downVote)
+  .get('/voteCount/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.voteCount)
 
 router.use('/api/v1', apiRouter)
 

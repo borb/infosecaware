@@ -260,11 +260,111 @@ const getTagCounts = (req, res) => {
   })
 }
 
+const upVote = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.findOneAndDelete(
+    {
+      issueId: new ObjectId(req.params.issueId),
+      voteCaster: req.authUser.email
+    },
+    (error, results) => {
+      console.log({error: error, results: results})
+      if (results === null) {
+        let vote = new votes()
+        vote.issueId = req.params.issueId
+        vote.voteCaster = req.authUser.email
+        vote.up = true
+
+        vote.save((error) => {
+          if (error) {
+            res.status(500).json({
+              success: false
+            })
+            return
+          }
+
+          res.json({success: true, vote: 'registered'})
+        })
+      } else
+        res.json({success: true, vote: 'revoked'})
+    }
+  )
+}
+
+const downVote = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.findOneAndDelete(
+    {
+      issueId: new ObjectId(req.params.issueId),
+      voteCaster: req.authUser.email
+    },
+    (error, results) => {
+      console.log({error: error, results: results})
+      if (results === null) {
+        let vote = new votes()
+        vote.issueId = req.params.issueId
+        vote.voteCaster = req.authUser.email
+        vote.up = false
+
+        vote.save((error) => {
+          if (error) {
+            res.status(500).json({
+              success: false
+            })
+            return
+          }
+
+          res.json({success: true, vote: 'registered'})
+        })
+      } else
+        res.json({success: true, vote: 'revoked'})
+    }
+  )
+}
+
+const voteCount = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.aggregate([
+    {
+      $match: {
+        issueId: new ObjectId(req.params.issueId)
+      }
+    },
+    {
+      $group: {
+        _id: '$up',
+        count: {$sum: 1}
+      }
+    }
+  ]).exec((error, results) => {
+    const voteCount = {
+      up: 0,
+      down: 0
+    }
+
+    // consolidate into a simplified format
+    results.map((result) => {
+      if (result._id === false)
+        voteCount.down = result.count
+      else
+        voteCount.up = result.count
+    })
+
+    res.json({
+      success: true,
+      voteData: voteCount
+    })
+  })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
   "getBoardData": getBoardData,
   "getIssue": getIssue,
   "postComment": postComment,
-  "getTagCounts": getTagCounts
+  "getTagCounts": getTagCounts,
+  "upVote": upVote,
+  "downVote": downVote,
+  "voteCount": voteCount
 }

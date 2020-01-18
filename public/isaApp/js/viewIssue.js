@@ -48,6 +48,10 @@ infosecawareApplication
       })
     })
 
+    $scope.votes = {
+      up: 0,
+      down: 0
+    }
     $scope.comment = ''
     $scope.reset()
   }])
