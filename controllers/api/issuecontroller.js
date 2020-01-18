@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import _ from 'lodash'
 
+const ObjectId = mongoose.Types.ObjectId
+
 const post = (req, res) => {
   // populate new issue with data
   let issue = new (mongoose.model('issues'))()
@@ -68,6 +70,14 @@ const getBoardData = (req, res) => {
       }
     },
     {
+      $lookup: {
+        from: 'votes',
+        localField: '_id',
+        foreignField: 'issueId',
+        as: 'votes'
+      }
+    },
+    {
       $match: {
         $or: [
           {accessLimited: false},
@@ -132,16 +142,33 @@ const getBoardData = (req, res) => {
     .aggregate(issueAggregate)
     .exec((error, results) => {
       results.map((result) => {
+        // setup colourisation for list class
         result.listClass =
           result.sensitivity === 'safe' ? 'success' :
             (result.sensitivity === 'sensitive' ? 'warning' :
               (result.sensitivity === 'top-secret' ? 'danger' : 'primary')
             )
 
+        // redact identity for anonymous posts
         if (result.anonymous) {
           result.authorData = [{fullname: '<redacted>'}]
           result.authorEmail = '<redacted>'
         }
+
+        // consolidate vote data into a useful format
+        let voteData = {
+          up: 0,
+          down: 0
+        }
+
+        result.votes.map((vote) => {
+          if (vote.up === false)
+            voteData.down++
+          else
+            voteData.up++
+        })
+
+        result.votes = voteData
       })
       res.json({
         success: true,
@@ -154,7 +181,6 @@ const getBoardData = (req, res) => {
 
 const getIssue = (req, res) => {
   const issues = mongoose.model('issues')
-  const ObjectId = mongoose.Types.ObjectId
 
   if (!req.params.issueId) {
     res.json({
@@ -182,12 +208,14 @@ const getIssue = (req, res) => {
           as: 'comments',
           pipeline: [
             {$sort: {postedDate: -1}},
-            {$lookup: {
-              from: 'users',
-              localField: 'authorEmail',
-              foreignField: 'email',
-              as: 'authorData'
-            }}
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'authorEmail',
+                foreignField: 'email',
+                as: 'authorData'
+              }
+            }
           ]
         }
       },
@@ -214,7 +242,6 @@ const getIssue = (req, res) => {
 }
 
 const postComment = (req, res) => {
-  const ObjectId = mongoose.Types.ObjectId
   let comment = new (mongoose.model('comments'))()
   comment.issueId = new ObjectId(req.body.issueId)
   comment.authorEmail = req.authUser.email
@@ -232,10 +259,137 @@ const postComment = (req, res) => {
   })
 }
 
+const getTagCounts = (req, res) => {
+  const issues = mongoose.model('issues')
+  issues.aggregate([
+    {
+      $match: {
+        tagList: {$not: {$size: 0}}
+      }
+    },
+    {$unwind: '$tagList'},
+    {
+      $group: {
+        _id: {$toLower: '$tagList'},
+        count: {$sum: 1}
+      }
+    },
+    {
+      $match: {
+        count: {$gte: 1}
+      }
+    }
+  ]).exec((error, results) => {
+    res.json({
+      success: true,
+      tagData: results
+    })
+  })
+}
+
+const upVote = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.findOneAndDelete(
+    {
+      issueId: new ObjectId(req.params.issueId),
+      voteCaster: req.authUser.email
+    },
+    (error, results) => {
+      if (results === null) {
+        let vote = new votes()
+        vote.issueId = req.params.issueId
+        vote.voteCaster = req.authUser.email
+        vote.up = true
+
+        vote.save((error) => {
+          if (error) {
+            res.status(500).json({
+              success: false
+            })
+            return
+          }
+
+          res.json({success: true, vote: 'registered'})
+        })
+      } else
+        res.json({success: true, vote: 'revoked'})
+    }
+  )
+}
+
+const downVote = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.findOneAndDelete(
+    {
+      issueId: new ObjectId(req.params.issueId),
+      voteCaster: req.authUser.email
+    },
+    (error, results) => {
+      if (results === null) {
+        let vote = new votes()
+        vote.issueId = req.params.issueId
+        vote.voteCaster = req.authUser.email
+        vote.up = false
+
+        vote.save((error) => {
+          if (error) {
+            res.status(500).json({
+              success: false
+            })
+            return
+          }
+
+          res.json({success: true, vote: 'registered'})
+        })
+      } else
+        res.json({success: true, vote: 'revoked'})
+    }
+  )
+}
+
+const voteCount = (req, res) => {
+  const votes = mongoose.model('votes')
+  votes.aggregate([
+    {
+      $match: {
+        issueId: new ObjectId(req.params.issueId)
+      }
+    },
+    {
+      $group: {
+        _id: '$up',
+        count: {$sum: 1}
+      }
+    }
+  ]).exec((error, results) => {
+    const voteCount = {
+      up: 0,
+      down: 0
+    }
+
+    // consolidate into a simplified format
+    results.map((result) => {
+      if (result._id === false)
+        voteCount.down = result.count
+      else
+        voteCount.up = result.count
+    })
+
+    res.json({
+      success: true,
+      voteData: voteCount
+    })
+  })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
   "getBoardData": getBoardData,
   "getIssue": getIssue,
-  "postComment": postComment
+  "postComment": postComment,
+  "getTagCounts": getTagCounts,
+  "upVote": upVote,
+  "downVote": downVote,
+  "voteCount": voteCount
 }

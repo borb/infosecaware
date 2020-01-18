@@ -1,6 +1,6 @@
 <% include parts/header.ejs %>
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="landingController">
   <div class="row">
     <div class="col-sm">
       <h1>Welcome, <%= authUser.fullname %></h1>
@@ -19,26 +19,10 @@
         &nbsp;
       </div>
       <div class="container">
-        <div id="tagcloud">
-          <a href="#" rel="4"><span>ssh<sup>4</sup></span></a>
-          <a href="#" rel="2"><span>docker<sup>2</sup></span></a>
-          <a href="#" rel="5"><span>ddos<sup>5</sup></span></a>
-          <a href="#" rel="5"><span>php<sup>5</sup></span></a>
-          <a href="#" rel="4"><span>mysql<sup>4</sup></span></a>
-          <a href="#" rel="3"><span>drupal<sup>3</sup></span></a>
-          <a href="#" rel="2"><span>xss<sup>2</sup></span></a>
-          <a href="#" rel="2"><span>wordpress<sup>2</sup></span></a>
+        <div class="form-row">Tag cloud:</div>
+        <div id="tagcloud" class="form-row">
+          <a ng-repeat="tag in tagData" href="#" rel="{{ tag.count }}"><span>{{ tag._id }}<sup>{{ tag.count }}</sup></span></a>
         </div>
-        <script>
-          $(document).ready($(function () {
-            $("#tagcloud a").tagcloud({
-              color: {
-                start: '#1c5866',
-                end: '#661c49'
-              }
-            })
-          }))
-        </script>
       </div>
     </div>
     <div class="col-sm">
@@ -52,5 +36,6 @@
 </div>
 
 <script src="/isaApp/js/community.js"></script>
+<script src="/isaApp/js/landing.js"></script>
 
 <% include parts/footer.ejs %>

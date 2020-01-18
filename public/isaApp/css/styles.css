@@ -38,3 +38,7 @@ div.comment-area .form-row:nth-child(odd) {
 div.comment-button {
     margin-top: 5px;
 }
+
+span.votes {
+    float: right;
+}
