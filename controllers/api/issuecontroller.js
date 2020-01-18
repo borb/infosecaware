@@ -249,7 +249,7 @@ const getTagCounts = (req, res) => {
     },
     {
       $match: {
-        count: {$gte: 2}
+        count: {$gte: 1}
       }
     },
     {$limit: 100}
