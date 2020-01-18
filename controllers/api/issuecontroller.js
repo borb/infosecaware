@@ -232,10 +232,40 @@ const postComment = (req, res) => {
   })
 }
 
+const getTagCounts = (req, res) => {
+  const issues = mongoose.model('issues')
+  issues.aggregate([
+    {
+      $match: {
+        tagList: {$not: {$size: 0}}
+      }
+    },
+    {$unwind: "$tagList"},
+    {
+      $group: {
+        _id: {$toLower: '$tagList'},
+        count: {$sum: 1}
+      }
+    },
+    {
+      $match: {
+        count: {$gte: 2}
+      }
+    },
+    {$limit: 100}
+  ]).exec((error, results) => {
+    res.json({
+      success: true,
+      tagData: results
+    })
+  })
+}
+
 export default {
   "post": post,
   "getPostMetadata": getPostMetadata,
   "getBoardData": getBoardData,
   "getIssue": getIssue,
-  "postComment": postComment
+  "postComment": postComment,
+  "getTagCounts": getTagCounts
 }

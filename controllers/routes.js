@@ -34,6 +34,7 @@ apiRouter
   .post('/getBoardData', authenticationcontroller.isAuthenticated, issuecontroller.getBoardData)
   .get('/getIssue/:issueId', authenticationcontroller.isAuthenticated, issuecontroller.getIssue)
   .post('/postComment', authenticationcontroller.isAuthenticated, issuecontroller.postComment)
+  .get('/getTagCounts', authenticationcontroller.isAuthenticated, issuecontroller.getTagCounts)
 
 router.use('/api/v1', apiRouter)
 
