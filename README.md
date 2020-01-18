@@ -62,7 +62,7 @@ infosecaware is thankful for and makes use of the following manually installed l
 
 The following libraries are installed from npmjs:
 
-| name | homepage | license |
+| Name | Homepage | License |
 |------|----------|---------|
 | bcrypt | https://github.com/kelektiv/node.bcrypt.js#readme | MIT |
 | cookie-parser (expressjs) | https://github.com/expressjs/cookie-parser#readme | MIT |
