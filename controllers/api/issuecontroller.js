@@ -295,7 +295,6 @@ const upVote = (req, res) => {
       voteCaster: req.authUser.email
     },
     (error, results) => {
-      console.log({error: error, results: results})
       if (results === null) {
         let vote = new votes()
         vote.issueId = req.params.issueId
@@ -326,7 +325,6 @@ const downVote = (req, res) => {
       voteCaster: req.authUser.email
     },
     (error, results) => {
-      console.log({error: error, results: results})
       if (results === null) {
         let vote = new votes()
         vote.issueId = req.params.issueId
