@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import _ from 'lodash'
 
+const ObjectId = mongoose.Types.ObjectId
+
 const post = (req, res) => {
   // populate new issue with data
   let issue = new (mongoose.model('issues'))()
@@ -154,7 +156,6 @@ const getBoardData = (req, res) => {
 
 const getIssue = (req, res) => {
   const issues = mongoose.model('issues')
-  const ObjectId = mongoose.Types.ObjectId
 
   if (!req.params.issueId) {
     res.json({
@@ -214,7 +215,6 @@ const getIssue = (req, res) => {
 }
 
 const postComment = (req, res) => {
-  const ObjectId = mongoose.Types.ObjectId
   let comment = new (mongoose.model('comments'))()
   comment.issueId = new ObjectId(req.body.issueId)
   comment.authorEmail = req.authUser.email
