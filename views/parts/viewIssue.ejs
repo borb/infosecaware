@@ -35,8 +35,8 @@
               <div class="form-row">&nbsp;</div>
               <div class="form-row">
                 <div class="btn-group" role="group">
-                  <button type="button" class="btn btn-success">👍 ({{ votes.up }})</button>
-                  <button type="button" class="btn btn-danger">👎 ({{ votes.down }})</button>
+                  <button type="button" class="btn btn-success" ng-click="upVote()">👍 ({{ votes.up }})</button>
+                  <button type="button" class="btn btn-danger" ng-click="downVote()">👎 ({{ votes.down }})</button>
                 </div>
               </div>
             </div>
