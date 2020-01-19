@@ -59,7 +59,7 @@ infosecawareApplication
 // controller, so async helps it setup faster
 $('#raiseIssueModal').on('show.bs.modal', function() {
   setupAuthorTagSuggestions(
-    document.getElementById('postTags'),
-    document.getElementById('postAudience')
+    document.getElementById('searchPostTags'),
+    document.getElementById('searchPostAudience')
   )
 })
