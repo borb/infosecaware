@@ -1,3 +1,10 @@
+/**
+ * bootstrap for browser-side code.
+ *
+ * instantiate the angular module, and create global functions for use elsewhere.
+ * all browser-side code is pre-ES2015 for wider compatibility.
+ */
+
 angular.element(function() {
   angular.bootstrap(document, ['infosecaware'])
 })
@@ -5,7 +12,8 @@ angular.element(function() {
 // setup the application so we can reuse it without redeclaring the module elsewhere
 var infosecawareApplication = angular.module('infosecaware', ['ngSanitize'])
 
-// register a filter that allows us to retain newlines when outputting text
+// register a filter that allows us to retain newlines when outputting text;
+// this is used heavily in the comment facility
 infosecawareApplication.filter('nl2br', ['$sanitize', function($sanitize) {
   return function(input) {
     return $sanitize(
@@ -19,7 +27,7 @@ infosecawareApplication.filter('nl2br', ['$sanitize', function($sanitize) {
 
 // shared function to setup author and tag suggestions so they can be reused
 var setupAuthorTagSuggestions = function(tagElem, authorElem) {
-  // autosuggestions for the post tags
+  // autosuggestions for the post tags; pull via api call
   var $http = angular.injector(['ng']).get('$http')
   $http.get('/api/v1/getPostMetadata')
     .then(

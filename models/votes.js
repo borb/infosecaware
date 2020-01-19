@@ -1,3 +1,8 @@
+/**
+ * schema for votes collection.
+ * votes are raised against an issues document.
+ */
+
 import mongoose from 'mongoose'
 
 const ObjectId = mongoose.Types.ObjectId

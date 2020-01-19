@@ -1,3 +1,7 @@
+/**
+ * "routes": maps urls to controller calls.
+ */
+
 import express from 'express'
 
 import indexpagecontroller from './server/indexpagecontroller.js'

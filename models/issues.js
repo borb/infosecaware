@@ -1,3 +1,7 @@
+/**
+ * schema for issues collection.
+ */
+
 import mongoose from 'mongoose'
 
 const issuesSchema = new mongoose.Schema({

@@ -1,5 +1,14 @@
+/**
+ * landing page controller frontend code.
+ *
+ * the landing page contains a tag cloud and view of the message board, however that
+ * is rendered by the communityController.
+ */
+
 infosecawareApplication
   .controller('landingController', ['$scope', '$http', function($scope, $http) {
+    // initiate the tag cloud by fetching tag count data from the api
+    // we can relax about copies since the data is read only
     $scope.tagCloud = function() {
       $http.get('/api/v1/getTagCounts')
         .then(

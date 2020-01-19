@@ -1,3 +1,8 @@
+/**
+ * schema for loginSessions collection.
+ * loginSessions are created after a 'users' document has logged in.
+ */
+
 import mongoose from 'mongoose'
 
 const loginSessionsSchema = new mongoose.Schema({

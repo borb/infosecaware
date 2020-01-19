@@ -1,3 +1,9 @@
+/**
+ * signup form code.
+ *
+ * this is not an angular module; we just call bootstrap validation.
+ */
+
 // signup form validation, based on example from the bootstrap documentation
 (function() {
   window.addEventListener('load', function() {

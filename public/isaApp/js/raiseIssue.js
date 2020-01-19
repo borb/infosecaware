@@ -1,3 +1,10 @@
+/**
+ * raise issue controller frontend code.
+ *
+ * this controller is used by the raiseIssue modal to validate and submit new issues
+ * to the application.
+ */
+
 infosecawareApplication
   .controller('raiseIssueController', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
     $scope.master = {}
@@ -7,7 +14,9 @@ infosecawareApplication
       $scope.post = angular.copy($scope.master)
     }
 
+    // submit the newly created issue to the api
     $scope.submit = function(post) {
+      // trigger the bootstrap form validation code to give friendly help
       var forms = document.getElementsByClassName('needs-validation')
 
       var failureCount = 0
@@ -26,8 +35,8 @@ infosecawareApplication
       // write post to api
       $http.post('/api/v1/raiseIssue', post)
         .then(
-          function(data) {
-            // success happened
+          function() {
+            // success happened; clear the form so it's fresh for next time
             $scope.reset()
             $('#raiseIssueModal').modal('hide')
 
@@ -41,11 +50,13 @@ infosecawareApplication
         )
     }
 
+    // initial setup; call reset method
     $scope.reset()
   }])
 
 // when the modal display event is triggered, load the tags & users from
-// database then attach autosuggest
+// database then attach autosuggest; we can perform this outside of an angular
+// controller, so async helps it setup faster
 $('#raiseIssueModal').on('show.bs.modal', function() {
   setupAuthorTagSuggestions(
     document.getElementById('postTags'),
