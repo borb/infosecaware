@@ -1,15 +1,19 @@
+/* place the autosuggest dropdown at a level in front of the modal z-index */
 .dropdown {
     z-index: 1051;
 }
 
+/* board view li items should be displayed as links */
 li.list-issue:hover {
     cursor: pointer;
 }
 
+/* an anchor tag without a href should be displayed as a link */
 a.hreflessLink:hover {
     cursor: pointer;
 }
 
+/* the area for displaying comments alongside a raised issue */
 div.comment-area {
     height: 75%;
     overflow-y: scroll;
@@ -27,6 +31,7 @@ div.comment-area .form-row p {
     width: 100%;
 }
 
+/* the following two classes alternate comment colours for clarity */
 div.comment-area .form-row:nth-child(even) {
     background-color: #eeeeee;
 }
@@ -39,6 +44,7 @@ div.comment-button {
     margin-top: 5px;
 }
 
+/* show votes to the right of the post title in the board list */
 span.votes {
     float: right;
 }

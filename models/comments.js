@@ -1,3 +1,8 @@
+/**
+ * schema for comments collection.
+ * comments are raised upon issues.
+ */
+
 import mongoose from 'mongoose'
 
 const ObjectId = mongoose.Schema.Types.ObjectId

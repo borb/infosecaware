@@ -1,3 +1,7 @@
+/**
+ * schema for users collection.
+ */
+
 import mongoose from 'mongoose'
 
 const usersSchema = new mongoose.Schema({

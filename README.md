@@ -43,6 +43,12 @@ To run the application in development mode:
 
 > `npm run start-dev`
 
+## Coding style
+
+Please note that server-side code is in ES2015 (ES6) format, for which nodejs 13 is required.
+
+Browser-side code is ES5 format for compatibility; this code resides within `public/isaApp/js/`.
+
 ## Author
 
 Rob Andrews <ra17aab@herts.ac.uk> / <rob@aphlor.org>
