@@ -289,9 +289,16 @@ const getIssue = (req, res) => {
       {
         $lookup: {
           from: 'comments',
-          let: {issueId: '$_id'},
+          let: {parentIssueId: '$_id'},
           as: 'comments',
           pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ['$issueId', '$$parentIssueId']
+                }
+              }
+            },
             {$sort: {postedDate: -1}},
             {
               $lookup: {
