@@ -7,7 +7,10 @@
 import mongoose from 'mongoose'
 
 // setup mongoose with our dsn
-const infosecawareDsn = 'mongodb://localhost/infosecaware'
+const infosecawareDsn = typeof(process.env.MONGODB_URI)
+  ? process.env.MONGODB_URI
+  : 'mongodb://localhost/infosecaware'
+
 mongoose.connect(infosecawareDsn, {
   useNewUrlParser: true,
   useUnifiedTopology: true
