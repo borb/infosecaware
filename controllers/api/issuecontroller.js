@@ -333,6 +333,12 @@ const getIssue = (req, res) => {
         return
       }
 
+      // check for identity redaction
+      if (results[0].anonymous) {
+        results[0].authorEmail = '<redacted>'
+        results[0].authorData = [{fullname: '<redacted>'}]
+      }
+
       // return the resulting data
       res.json({
         success: results.length ? true : false,
