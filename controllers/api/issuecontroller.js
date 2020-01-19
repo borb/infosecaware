@@ -60,11 +60,11 @@ const getPostMetadata = (req, res) => {
             return
           }
 
-          const userList = results.map((result) => {return {fullname: result.fullname, email: result.email}})
+          // return the product of both fetches
           res.json({
             success: true,
             postTags: tagList,
-            userList: userList
+            userList: results
           })
         })
     })
