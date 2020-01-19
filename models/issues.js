@@ -22,8 +22,7 @@ const issuesSchema = new mongoose.Schema({
   },
   message: {
     type: String,
-    required: true,
-    index: true
+    required: true
   },
   sensitivity: {
     type: String,
