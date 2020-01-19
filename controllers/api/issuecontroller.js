@@ -41,11 +41,25 @@ const getPostMetadata = (req, res) => {
     .find()
     .select('tagList -_id')
     .exec((error, results) => {
+      if (error) {
+        res.status(500).json({
+          success: false
+        })
+        return
+      }
+
       const tagList = _.union(...results.map((result) => result.tagList))
       users
         .find()
         .select('fullname email -_id')
         .exec((error, results) => {
+          if (error) {
+            res.status(500).json({
+              success: false
+            })
+            return
+          }
+
           const userList = results.map((result) => {return {fullname: result.fullname, email: result.email}})
           res.json({
             success: true,
@@ -141,6 +155,13 @@ const getBoardData = (req, res) => {
   issues
     .aggregate(issueAggregate)
     .exec((error, results) => {
+      if (error) {
+        res.status(500).json({
+          success: false
+        })
+        return
+      }
+
       results.map((result) => {
         // setup colourisation for list class
         result.listClass =
@@ -234,6 +255,13 @@ const getIssue = (req, res) => {
       }
     ])
     .exec((error, results) => {
+      if (error) {
+        res.status(500).json({
+          success: false
+        })
+        return
+      }
+
       res.json({
         success: results.length ? true : false,
         post: results.length ? results[0] : {}
@@ -280,6 +308,13 @@ const getTagCounts = (req, res) => {
       }
     }
   ]).exec((error, results) => {
+    if (error) {
+      res.status(500).json({
+        success: false
+      })
+      return
+    }
+
     res.json({
       success: true,
       tagData: results
@@ -295,6 +330,13 @@ const upVote = (req, res) => {
       voteCaster: req.authUser.email
     },
     (error, results) => {
+      if (error) {
+        res.status(500).json({
+          success: false
+        })
+        return
+      }
+
       if (results === null) {
         let vote = new votes()
         vote.issueId = req.params.issueId
@@ -325,6 +367,13 @@ const downVote = (req, res) => {
       voteCaster: req.authUser.email
     },
     (error, results) => {
+      if (error) {
+        res.status(500).json({
+          success: false
+        })
+        return
+      }
+
       if (results === null) {
         let vote = new votes()
         vote.issueId = req.params.issueId
@@ -362,6 +411,13 @@ const voteCount = (req, res) => {
       }
     }
   ]).exec((error, results) => {
+    if (error) {
+      res.status(500).json({
+        success: false
+      })
+      return
+    }
+
     const voteCount = {
       up: 0,
       down: 0
