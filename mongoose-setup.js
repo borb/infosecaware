@@ -7,7 +7,7 @@
 import mongoose from 'mongoose'
 
 // setup mongoose with our dsn
-const infosecawareDsn = typeof(process.env.MONGODB_URI)
+const infosecawareDsn = (typeof(process.env.MONGODB_URI) !== 'undefined')
   ? process.env.MONGODB_URI
   : 'mongodb://localhost/infosecaware'
 
